@@ -42,7 +42,15 @@
   text-decoration: none;
   color: black;
   opacity: 60%;
-  margin-right: 20px;
+  margin-right: 40px;
+  -webkit-transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s ease-out;
+}
+
+.menu .menu-list .menu-link:hover {
+  opacity: 1;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .menu #year {
