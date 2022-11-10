@@ -1,0 +1,25 @@
+.menu-list #home-link {
+    opacity: 1;
+}
+
+.carousel {
+    display: flex;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding-left: 40%;
+    align-items: center;
+
+    .work {
+        width: 60vh;
+
+    }
+
+    .work:hover {}
+
+
+}
+
+.carousel::-webkit-scrollbar {
+    display: none;
+}
