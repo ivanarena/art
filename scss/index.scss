@@ -4,7 +4,8 @@
 
 .carousel {
     display: flex;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
     padding-left: 40%;
@@ -12,11 +13,10 @@
 
     .work-wrap {
         position: relative;
-        background-color: red;
 
         .work {
             display: block;
-            width: 60vh;
+            width: 40vh;
         }
 
         .work-overlay {
@@ -33,7 +33,11 @@
                 color: white;
                 padding-top: 40%;
                 padding-left: 20%;
-                font-size: larger;
+                padding-right: 20%;
+                text-transform: uppercase;
+                font-weight: bold;
+                font-size: 1rem;
+                line-height: 1.4rem;
 
                 .work-desc {
                     color: rgba(255, 255, 255, 0.5);

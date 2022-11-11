@@ -6,7 +6,8 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
   padding-left: 40%;
@@ -17,12 +18,11 @@
 
 .carousel .work-wrap {
   position: relative;
-  background-color: red;
 }
 
 .carousel .work-wrap .work {
   display: block;
-  width: 60vh;
+  width: 40vh;
 }
 
 .carousel .work-wrap .work-overlay {
@@ -41,7 +41,11 @@
   color: white;
   padding-top: 40%;
   padding-left: 20%;
-  font-size: larger;
+  padding-right: 20%;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1.4rem;
 }
 
 .carousel .work-wrap .work-overlay .work-title .work-desc {
