@@ -71,6 +71,12 @@ body {
   padding-right: 40px;
 }
 
+footer {
+  padding-top: 40px;
+  padding-bottom: 20px;
+  font-size: small;
+}
+
 .flex-center {
   display: -webkit-box;
   display: -ms-flexbox;
