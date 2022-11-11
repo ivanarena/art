@@ -10,12 +10,42 @@
     padding-left: 40%;
     align-items: center;
 
-    .work {
-        width: 60vh;
+    .work-wrap {
+        position: relative;
+        background-color: red;
 
+        .work {
+            display: block;
+            width: 60vh;
+        }
+
+        .work-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0);
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+
+            .work-title {
+                color: white;
+
+                .work-desc {
+                    color: rgba(255, 255, 255, 0.5);
+                }
+            }
+        }
+
+
+        .work-overlay:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 1;
+            transition: all 0.3s ease-in-out;
+        }
     }
 
-    .work:hover {}
 
 
 }

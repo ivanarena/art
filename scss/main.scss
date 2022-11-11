@@ -47,3 +47,10 @@ body {
         padding-right: 40px;
     }
 }
+
+// utilities
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -15,8 +15,41 @@
           align-items: center;
 }
 
-.carousel .work {
+.carousel .work-wrap {
+  position: relative;
+  background-color: red;
+}
+
+.carousel .work-wrap .work {
+  display: block;
   width: 60vh;
+}
+
+.carousel .work-wrap .work-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0);
+  opacity: 0;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.carousel .work-wrap .work-overlay .work-title {
+  color: white;
+}
+
+.carousel .work-wrap .work-overlay .work-title .work-desc {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.carousel .work-wrap .work-overlay:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .carousel::-webkit-scrollbar {
