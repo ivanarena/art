@@ -30,6 +30,10 @@
             transition: all 0.3s ease-in-out;
 
             .work-title {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                text-decoration: none;
                 color: white;
                 padding-top: 40%;
                 padding-left: 20%;
@@ -37,10 +41,11 @@
                 text-transform: uppercase;
                 font-weight: bold;
                 font-size: 1rem;
-                line-height: 1.4rem;
+                line-height: 1.6rem;
 
                 .work-desc {
                     color: rgba(255, 255, 255, 0.5);
+                    text-transform: none;
                 }
             }
         }

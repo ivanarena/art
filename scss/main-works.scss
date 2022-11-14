@@ -1,0 +1,33 @@
+.work-wrap {
+    display: flex;
+    justify-content: space-around;
+
+
+    .work-text {
+        display: flex;
+        flex-direction: column;
+        padding-left: 5vw;
+        padding-right: 10vw;
+
+        .work-title {
+            margin-bottom: 2px;
+        }
+
+        .work-subtitle {
+            margin-bottom: 50%;
+        }
+
+        .work-desc {
+            margin-bottom: 20%;
+        }
+
+        .work-info {
+            opacity: 60%;
+        }
+    }
+
+    .work {
+        width: 50%;
+    }
+
+}
