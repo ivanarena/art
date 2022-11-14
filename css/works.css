@@ -1,0 +1,39 @@
+#works-link {
+  opacity: 1;
+}
+
+.page-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.page-wrap ol {
+  list-style-type: none;
+  padding: 0;
+}
+
+.page-wrap a {
+  color: black;
+  opacity: 60%;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.page-wrap .category-list-wrap {
+  min-height: 80vh;
+  padding-left: 5vw;
+  text-transform: uppercase;
+}
+
+.page-wrap .category-list-wrap .category-list .category-title {
+  margin-top: 80px;
+  margin-bottom: 20px;
+}
