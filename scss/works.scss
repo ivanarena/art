@@ -1,3 +1,5 @@
+// works page
+
 #works-link {
     opacity: 1;
 }
@@ -17,6 +19,13 @@
         opacity: 60%;
         text-decoration: none;
         font-weight: bold;
+        transition: opacity 0.3s ease-out;
+    }
+
+    a:hover {
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+
     }
 
     .category-list-wrap {

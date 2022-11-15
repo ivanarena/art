@@ -61,6 +61,10 @@ body {
   transition: opacity 0.3s ease-out;
 }
 
+.menu .menu-list .dbl-slash {
+  margin-right: 40px;
+}
+
 .menu .menu-list .menu-link:hover {
   opacity: 1;
   -webkit-transition: all 0.3s ease-in-out;

@@ -1,3 +1,5 @@
+// body, navbar and footer
+
 * {
     margin: 0;
     box-sizing: border-box;
@@ -34,6 +36,10 @@ body {
             opacity: 60%;
             margin-right: 40px;
             transition: opacity 0.3s ease-out;
+        }
+
+        .dbl-slash {
+            margin-right: 40px;
         }
 
         .menu-link:hover {
