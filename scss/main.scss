@@ -7,39 +7,38 @@
 }
 
 body {
+    color: white;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 100vh;
+    background-image: url(/res/selfportraits/SELF-PORTRAIT.jpg);
+    background-position: center;
+    background-size: 160vw;
 }
 
 
 .menu {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    height: 95vh;
+    margin-top: 40vh;
     justify-content: space-between;
     font-weight: bold;
-    padding-top: 40px;
-    padding-bottom: 40px;
-
 
     .menu-list {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         list-style-type: none;
-        align-items: center;
+        align-items: flex-start;
+        padding-left: 0;
+        margin-left: 25vw;
 
         .menu-link {
+            line-height: 1.5em;
             text-decoration: none;
-            color: black;
+            color: white;
             opacity: 60%;
-            margin-right: 40px;
             transition: opacity 0.3s ease-out;
-        }
-
-        .dbl-slash {
-            margin-right: 40px;
         }
 
         .menu-link:hover {
@@ -49,8 +48,12 @@ body {
 
     }
 
-    #year {
-        padding-right: 40px;
+    p {
+        margin-right: 25vw;
+        width: 15vw;
+        font-weight: lighter;
+        font-style: italic;
+        text-align: justify;
     }
 }
 

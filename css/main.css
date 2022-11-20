@@ -6,6 +6,7 @@
 }
 
 body {
+  color: white;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -13,10 +14,10 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   height: 100vh;
+  background-image: url(/res/selfportraits/SELF-PORTRAIT.jpg);
+  background-position: center;
+  background-size: 160vw;
 }
 
 .menu {
@@ -27,42 +28,37 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  height: 95vh;
+  margin-top: 40vh;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
   font-weight: bold;
-  padding-top: 40px;
-  padding-bottom: 40px;
 }
 
 .menu .menu-list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
+  -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+      -ms-flex-direction: column;
+          flex-direction: column;
   list-style-type: none;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding-left: 0;
+  margin-left: 25vw;
 }
 
 .menu .menu-list .menu-link {
+  line-height: 1.5em;
   text-decoration: none;
-  color: black;
+  color: white;
   opacity: 60%;
-  margin-right: 40px;
   -webkit-transition: opacity 0.3s ease-out;
   transition: opacity 0.3s ease-out;
-}
-
-.menu .menu-list .dbl-slash {
-  margin-right: 40px;
 }
 
 .menu .menu-list .menu-link:hover {
@@ -71,8 +67,12 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
-.menu #year {
-  padding-right: 40px;
+.menu p {
+  margin-right: 25vw;
+  width: 15vw;
+  font-weight: lighter;
+  font-style: italic;
+  text-align: justify;
 }
 
 footer {
