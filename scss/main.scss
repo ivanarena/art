@@ -1,5 +1,4 @@
 // body, navbar and footer
-
 * {
     margin: 0;
     box-sizing: border-box;
@@ -46,14 +45,23 @@ body {
             transition: all 0.3s ease-in-out;
         }
 
+        .is-active {
+            opacity: 1;
+        }
+
     }
 
-    p {
+    .main-text {
         margin-right: 25vw;
         width: 15vw;
         font-weight: lighter;
         font-style: italic;
         text-align: justify;
+        display: none;
+    }
+
+    .is-active {
+        display: block;
     }
 }
 

@@ -2,68 +2,68 @@
   opacity: 1;
 }
 
+/*
 .carousel {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  padding-left: 40%;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding-left: 40%;
+    align-items: center;
+
+    .work-wrap {
+        position: relative;
+
+        .work {
+            display: block;
+            width: 40vh;
+        }
+
+        .work-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0);
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+
+            .work-title {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                text-decoration: none;
+                color: white;
+                padding-top: 40%;
+                padding-left: 20%;
+                padding-right: 20%;
+                text-transform: uppercase;
+                font-weight: bold;
+                font-size: 1rem;
+                line-height: 1.6rem;
+
+                .work-desc {
+                    color: rgba(255, 255, 255, 0.5);
+                    text-transform: none;
+                }
+            }
+        }
+
+
+        .work-overlay:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 1;
+            transition: all 0.3s ease-in-out;
+        }
+    }
+
+
+
 }
 
-.carousel .work-wrap {
-  position: relative;
-}
-
-.carousel .work-wrap .work {
-  display: block;
-  width: 40vh;
-}
-
-.carousel .work-wrap .work-overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0);
-  opacity: 0;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
-
-.carousel .work-wrap .work-overlay .work-title {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-  color: white;
-  padding-top: 40%;
-  padding-left: 20%;
-  padding-right: 20%;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 1rem;
-  line-height: 1.6rem;
-}
-
-.carousel .work-wrap .work-overlay .work-title .work-desc {
-  color: rgba(255, 255, 255, 0.5);
-  text-transform: none;
-}
-
-.carousel .work-wrap .work-overlay:hover {
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 1;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
 
 .carousel::-webkit-scrollbar {
-  display: none;
-}
+    display: none;
+}*/
