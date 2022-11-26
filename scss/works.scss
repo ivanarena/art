@@ -1,0 +1,45 @@
+.works-sec {
+    display: flex;
+    height: 90vh;
+    display: none;
+    padding-left: 25vw;
+
+    .works-sec-col {
+        display: flex;
+        justify-content: center;
+        margin-top: 20vh;
+
+        .works-list {
+            list-style-type: none;
+            padding: 0;
+            text-transform: uppercase;
+
+            h2 {
+                margin-top: 40px;
+                margin-bottom: 10px;
+            }
+
+            li {
+
+                margin-bottom: 5px;
+
+                .work-link {
+                    text-decoration: none;
+                    opacity: 60%;
+                    color: white;
+                    transition: opacity 0.3s ease-out;
+                }
+
+                .work-link:hover {
+                    opacity: 1;
+                    transition: all 0.3s ease-in-out;
+                }
+            }
+
+        }
+    }
+}
+
+.is-active {
+    display: flex;
+}

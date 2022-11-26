@@ -9,18 +9,17 @@ body {
     color: white;
     display: flex;
     flex-direction: column;
-    height: 100vh;
     background-image: url(/res/selfportraits/SELF-PORTRAIT5.jpg);
-    background-position: center;
-    background-size: 160vw;
+    background-position: top;
+    background-size: 200%;
 }
 
 
 .menu {
     display: flex;
     flex-direction: row;
-    height: 95vh;
-    margin-top: 40vh;
+    height: 90vh;
+    padding-top: 40vh;
     justify-content: space-between;
     font-weight: bold;
 
@@ -68,6 +67,7 @@ body {
 footer {
     padding-top: 40px;
     padding-bottom: 20px;
+    height: 10vh;
     font-size: small;
 }
 

@@ -14,10 +14,9 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  height: 100vh;
   background-image: url(/res/selfportraits/SELF-PORTRAIT5.jpg);
-  background-position: center;
-  background-size: 160vw;
+  background-position: top;
+  background-size: 200%;
 }
 
 .menu {
@@ -28,8 +27,8 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  height: 95vh;
-  margin-top: 40vh;
+  height: 90vh;
+  padding-top: 40vh;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -87,6 +86,7 @@ body {
 footer {
   padding-top: 40px;
   padding-bottom: 20px;
+  height: 10vh;
   font-size: small;
 }
 

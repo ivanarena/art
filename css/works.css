@@ -1,9 +1,53 @@
-#works-link {
-  opacity: 1;
+.works-sec {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 90vh;
+  display: none;
+  padding-left: 25vw;
 }
 
-body {
-  background-image: url(/res/prosopagnosia/mona.png);
-  background-position: center;
-  background-size: 160vw;
+.works-sec .works-sec-col {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 20vh;
+}
+
+.works-sec .works-sec-col .works-list {
+  list-style-type: none;
+  padding: 0;
+  text-transform: uppercase;
+}
+
+.works-sec .works-sec-col .works-list h2 {
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
+.works-sec .works-sec-col .works-list li {
+  margin-bottom: 5px;
+}
+
+.works-sec .works-sec-col .works-list li .work-link {
+  text-decoration: none;
+  opacity: 60%;
+  color: white;
+  -webkit-transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s ease-out;
+}
+
+.works-sec .works-sec-col .works-list li .work-link:hover {
+  opacity: 1;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.is-active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
