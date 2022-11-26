@@ -3,6 +3,7 @@
     margin: 0;
     box-sizing: border-box;
     font-family: sans-serif;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -11,9 +12,8 @@ body {
     flex-direction: column;
     background-image: url(/res/selfportraits/SELF-PORTRAIT5.jpg);
     background-position: top;
-    background-size: 200%;
+    background-size: 100%;
 }
-
 
 .menu {
     display: flex;
@@ -21,7 +21,6 @@ body {
     height: 90vh;
     padding-top: 40vh;
     justify-content: space-between;
-    font-weight: bold;
 
     .menu-list {
         display: flex;
@@ -46,6 +45,7 @@ body {
 
         .is-active {
             opacity: 1;
+            font-weight: bold;
         }
 
     }
