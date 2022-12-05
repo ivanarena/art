@@ -1,0 +1,87 @@
+body {
+  height: 100vh;
+}
+
+body header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 30vh;
+  padding-top: 20vh;
+}
+
+body header .work-title {
+  margin-left: 25vw;
+}
+
+body header .back-link {
+  margin-right: 25vw;
+}
+
+body .work-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 60vh;
+}
+
+body .work-wrap .work-text {
+  width: 70vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body .work-wrap .work-text .work-subtitle,
+body .work-wrap .work-text .work-desc,
+body .work-wrap .work-text .work-info {
+  margin-bottom: 5vh;
+}
+
+body .work-wrap .work-text .work-subtitle {
+  font-weight: bold;
+}
+
+body .work-wrap .work-text .work-info {
+  opacity: 60%;
+}
+
+body .work-wrap .carousel {
+  width: 100vw;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding-left: 40%;
+  align-items: center;
+}
+
+body .work-wrap .carousel .work {
+  height: 100%;
+}
+
+body .work-wrap .carousel::-webkit-scrollbar {
+  display: none;
+}

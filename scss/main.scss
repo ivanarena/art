@@ -16,9 +16,19 @@ body {
     background-repeat: no-repeat;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
+a,
+a:active {
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
 .menu {
     display: flex;
-    flex-direction: row;
     height: 90vh;
     padding-top: 40vh;
     justify-content: space-between;
@@ -33,8 +43,6 @@ body {
 
         .menu-link {
             line-height: 1.5em;
-            text-decoration: none;
-            color: white;
             opacity: 60%;
             transition: opacity 0.3s ease-out;
         }
