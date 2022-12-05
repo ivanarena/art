@@ -19,10 +19,12 @@ body header {
 
 body header .work-title {
   margin-left: 25vw;
+  text-transform: uppercase;
 }
 
 body header .back-link {
   margin-right: 25vw;
+  text-transform: uppercase;
 }
 
 body .work-wrap {
@@ -65,23 +67,21 @@ body .work-wrap .work-text .work-info {
 body .work-wrap .carousel {
   height: 90vh;
   width: 100%;
-  padding-left: 20vw;
-  padding-right: 20vw;
+  padding-top: 4vh;
+  padding-left: 32vw;
+  padding-right: 31vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
 
 body .work-wrap .carousel .work {
   margin-left: 2vw;
   margin-right: 2vw;
-  height: 100%;
+  width: 100%;
 }
 
 body .work-wrap .carousel::-webkit-scrollbar {
