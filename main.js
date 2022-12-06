@@ -28,11 +28,11 @@ function setActive(e) {
         if (activeAnchor == main) {
             activeText = mainText;
             mainText.classList.add('is-active');
-        } else if (activeAnchor == works) {
-            activeText = worksText;
-            activeSection = worksSection;
-            worksText.classList.add('is-active');
-            worksSection.classList.add('is-active');
+            // } else if (activeAnchor == works) {
+            //     activeText = worksText;
+            //     activeSection = worksSection;
+            //     worksText.classList.add('is-active');
+            //     worksSection.classList.add('is-active');
         } else if (activeAnchor == about) {
             activeText = aboutText;
             aboutText.classList.add('is-active');
