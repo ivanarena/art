@@ -35,6 +35,7 @@ body .work-wrap {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  text-align: justify;
 }
 
 body .work-wrap .work-text {
