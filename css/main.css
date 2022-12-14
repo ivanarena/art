@@ -15,7 +15,7 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background-image: url(/res/selfportraits/SELF-PORTRAIT5.jpg);
+  background-image: url(/res/works/digital/selfportraits/SELF-PORTRAIT5.jpg);
   background-position: top;
   background-size: 200%;
   background-repeat: no-repeat;
@@ -36,7 +36,7 @@ a:active {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 90vh;
+  height: 100vh;
   padding-top: 40vh;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
@@ -66,6 +66,10 @@ a:active {
   transition: opacity 0.3s ease-out;
 }
 
+.menu .menu-list #main-link {
+  opacity: 1;
+}
+
 .menu .menu-list .menu-link:hover {
   opacity: 1;
   -webkit-transition: all 0.3s ease-in-out;
@@ -82,11 +86,18 @@ a:active {
   width: 15vw;
   font-weight: lighter;
   text-align: justify;
-  display: none;
 }
 
-.menu .is-active {
-  display: block;
+.about-sec {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100vh;
+  padding-top: 40vh;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 footer {
@@ -96,7 +107,8 @@ footer {
   font-size: small;
 }
 
-.flex-center {
+.flex-center,
+.flex-col-center {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -106,4 +118,11 @@ footer {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.flex-col-center {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
