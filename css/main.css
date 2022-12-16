@@ -93,11 +93,16 @@ a:active {
   display: -ms-flexbox;
   display: flex;
   height: 100vh;
-  padding-top: 40vh;
+  padding-top: 20vh;
+  padding-left: 25vw;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+.about-sec .about-text {
+  margin-top: 3vh;
 }
 
 footer {
