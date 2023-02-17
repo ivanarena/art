@@ -24,7 +24,7 @@ nav {
   align-items: center;
 }
 
-nav h1 {
+nav .home-link {
   cursor: pointer;
   font-weight: 300;
   font-size: 1.3em;
