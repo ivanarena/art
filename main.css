@@ -1,3 +1,8 @@
+:root {
+  --accent-color: red;
+  --indent: 10vw;
+}
+
 * {
   margin: 0;
   -webkit-box-sizing: border-box;
@@ -5,91 +10,142 @@
 }
 
 body {
+  font-family: sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.home-wrap,
+.full-wrap {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  font-family: 'Libre Baskerville', serif;
+  min-height: 100vh;
 }
 
-header {
+.home-wrap {
+  height: 100vh;
+  color: white;
+
+  min-height: 100%;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(./res/works/selfportraitblue.png);
+  background-position: center;
+  background-size: cover;
+}
+
+header.home-header {
+  height: 90%;
+  padding-left: var(--indent);
+  padding-top: 35vh;
+}
+
+header.full-header {
+  padding-top: 8vh;
+  padding-left: var(--indent);
+}
+
+ul {
+  list-style-type: none;
   display: flex;
-  align-items: center;
-  width: 100%;
-  height: 15vh;
+  padding-left: 0;
 }
 
-nav {
-  display: flex;
-  align-items: center;
+nav ul li {
+  margin-right: 1vw;
 }
 
-nav .home-link {
-  cursor: pointer;
-  font-weight: 300;
-  font-size: 1.3em;
-  margin-left: 5vw;
-  transition: color .6s ease-out;
+nav.home-nav ul li a,
+nav.home-nav ul li a:active,
+nav.home-nav ul li a:visited {
+  color: white;
 }
 
-nav a {
+ul li a,
+ul li a:active,
+ul li a:visited {
   text-decoration: none;
   color: black;
-  font-size: 1.3em;
-  margin-left: 2vw;
-  transition: color .6s ease-out;
-
+  transition: color 0.4s;
 }
 
-nav h1:hover,
-nav a:hover {
-  color: red;
-  transition: color .6s ease-out;
+nav ul li a:hover,
+nav.home-nav ul li a:hover {
+  color: var(--accent-color);
 }
 
-main {
-  display: flex;
-  justify-content: center;
-  width: 90%;
-  height: auto;
-}
 
-@media screen and (max-width: 800px) {
-  main {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  nav {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  nav a {
-    margin-left: 5vw;
-  }
-}
-
-.column {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  flex: 1;
-  margin-left: 1.6px;
-  margin-right: 1.6px;
-}
-
-.artwork {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  height: auto;
-  width: 100%;
-  margin-top: 1.6px;
-  margin-bottom: 1.6px;
+h1.home-name {
+  margin-top: 2vh;
+  color: var(--accent-color);
 }
 
 footer {
-  margin-top: 4vh;
+  align-self: center;
+  margin-top: auto;
   margin-bottom: 4vh;
+  font-size: .8em;
+}
+
+/* works */
+h1.page-title {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+  padding-left: var(--indent);
+  color: var(--accent-color);
+}
+
+ul.works-list {
+  color: black;
+  flex-direction: column;
+  padding-left: var(--indent);
+}
+
+ul.works-list li {
+  margin-bottom: 2vh;
+  font-size: x-large;
+}
+
+ul.works-list li a {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+ul.works-list li a:hover {
+  color: black;
+}
+
+/* about */
+p.about-text {
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: none;
+  padding-left: var(--indent);
+  text-align: justify;
+  padding-right: var(--indent);
+  width: 60vw;
+  margin-bottom: 2vh;
+  font-size: larger;
+  line-height: 1.5em;
+}
+
+
+@media screen and (max-width: 475px) {
+  p.about-text {
+    width: 100%;
+  }
+
+  p.about-text:last-child {
+    margin-bottom: 10vh;
+  }
+}
+
+/* contacts */
+a.contact,
+a.contact:active,
+a.contact:visited {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+a.contact:hover {
+  text-decoration: underline;
 }
