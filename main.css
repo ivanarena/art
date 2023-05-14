@@ -27,9 +27,8 @@ body {
 .home-wrap {
   height: 100vh;
   color: white;
-
   min-height: 100%;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(./res/works/selfportraitblue.png);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(./works/res/selfportraitblue.png);
   background-position: center;
   background-size: cover;
 }
@@ -39,6 +38,7 @@ header.home-header {
   padding-left: var(--indent);
   padding-top: 35vh;
 }
+
 
 header.full-header {
   padding-top: 8vh;
@@ -50,6 +50,14 @@ ul {
   display: flex;
   padding-left: 0;
 }
+
+@media screen and (max-width: 475px) {
+  nav.full-nav ul {
+    flex-wrap: wrap;
+    line-height: 2em;
+  }
+}
+
 
 nav ul li {
   margin-right: 1vw;
@@ -148,4 +156,31 @@ a.contact:visited {
 
 a.contact:hover {
   text-decoration: underline;
+}
+
+
+
+/* self-portraits */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* background-color: red; */
+  padding-left: var(--indent);
+  padding-right: var(--indent);
+  width: 100%;
+  height: auto;
+  margin-bottom: 10vh;
+}
+
+.gallery img {
+  flex: 1 0 20%;
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: cover;
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-bottom: 2px;
 }
