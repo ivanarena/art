@@ -103,6 +103,15 @@ h1.page-title {
   color: var(--accent-color);
 }
 
+a.page-title {
+  text-decoration: none;
+  color: var(--accent-color);
+}
+
+a.page-title:hover {
+  text-decoration: underline;
+}
+
 ul.works-list {
   color: black;
   flex-direction: column;
@@ -123,7 +132,8 @@ ul.works-list li a:hover {
 }
 
 /* about */
-p.about-text {
+p.about-text,
+.work-desc {
   color: rgba(0, 0, 0, 0.5);
   text-transform: none;
   padding-left: var(--indent);
@@ -133,6 +143,10 @@ p.about-text {
   margin-bottom: 2vh;
   font-size: larger;
   line-height: 1.5em;
+}
+
+.work-desc {
+  margin-bottom: 10vh;
 }
 
 

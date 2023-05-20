@@ -10,6 +10,7 @@ for filename in glob.glob('*.png'):
         image = image.convert('RGB')
         image.save(filename.replace('.png', '') + '.webp',
                    'webp', optimize=True, quality=12)
+        print(filename + ' converted')
         os.remove(filename)
 
 for filename in glob.glob('*.jpeg'):
@@ -18,6 +19,7 @@ for filename in glob.glob('*.jpeg'):
         image = image.convert('RGB')
         image.save(filename.replace('.jpeg', '') + '.webp',
                    'webp', optimize=True, quality=12)
+        print(filename + ' converted')
         os.remove(filename)
 
 for filename in glob.glob('*.jpg'):
@@ -26,4 +28,5 @@ for filename in glob.glob('*.jpg'):
         image = image.convert('RGB')
         image.save(filename.replace('.jpg', '') + '.webp',
                    'webp', optimize=True, quality=12)
+        print(filename + ' converted')
         os.remove(filename)
