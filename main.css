@@ -56,6 +56,12 @@ nav ul {
   list-style-type: none;
 }
 
+nav ul li {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
 main {
   display: flex;
   flex-direction: column;
