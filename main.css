@@ -60,6 +60,8 @@ main {
   margin-top: 4vh;
   padding-left: 1vw;
   padding-right: 1vw;
+  display: flex;
+  flex-direction: column;
 }
 
 .work img {
@@ -71,5 +73,12 @@ main {
 }
 
 .work span {
+  word-wrap: normal;
   opacity: 0.5;
+}
+
+@media screen and (max-width: 576px) {
+  .work img {
+    max-width: 80vw;
+  }
 }
