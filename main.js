@@ -6,10 +6,34 @@ for (let i = images.length - 1; i > 0; i--) {
     [images[i], images[j]] = [images[j], images[i]];
 }
 
-images[0].classList.add("active");
+function showImage(index) {
+    images.forEach(img => img.classList.remove("active"));
+    images[index].classList.add("active");
+}
+
 let current = 0;
-setInterval(() => {
-    images[current].classList.remove("active");
-    current = (current + 1) % images.length;
-    images[current].classList.add("active");
-}, 7000);
+
+function showWhenLoaded(index, callback) {
+    const img = images[index];
+    if (img.complete) {
+        showImage(index);
+        if (callback) callback();
+    } else {
+        img.addEventListener("load", function handler() {
+            img.removeEventListener("load", handler);
+            showImage(index);
+            if (callback) callback();
+        });
+    }
+}
+
+// Show the first image only after it's loaded
+showWhenLoaded(current, () => setTimeout(nextImage, 10000));
+
+function nextImage() {
+    let next = (current + 1) % images.length;
+    showWhenLoaded(next, () => {
+        current = next;
+        setTimeout(nextImage, 10000);
+    });
+}
