@@ -4,60 +4,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IVAN ARENA – ARTIST & AUTHOR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="main.css" />
     <link rel="icon" type="image/x-icon" href="res/favicon.ico" />
   </head>
-  <body>
-    <main>
-      <section class="texts">
-        <div>
-          <h1>Ivan Arena</h1>
-          <p>visual artist and published author</p>
-        </div>
-        <div class="links">
-          <!-- <a href="/books.html">read my books → </a>
-          <a href="/works.html">more of my works →</a> -->
-        </div>
-      </section>
+  <body class="home-page">
+    <div class="page-header">
+      <span class="page-label"></span>
+    </div>
 
-      <section class="pictures">
-        <img src="res/works/SELF-PORTRAIT.jpg" alt="" />
-        <img src="res/works/02.jpeg" alt="" />
-        <img src="res/works/03.jpg" alt="" />
-        <img src="res/works/brut10.jpeg" alt="" />
-        <img src="res/works/flash.jpeg" alt="" />
-        <img src="res/works/front-01-b.png" alt="" />
-        <img src="res/works/gnome.jpg" alt="" />
-        <img src="res/IMG_20231104_183953046-01.jpeg" alt="" />
-        <img src="res/IMG_20231129_181954702-01.jpeg" alt="" />
-        <img src="res/IMG_20231202_164812468-01.jpeg" alt="" />
-        <img src="res/works/lakebw.jpeg" alt="" />
-        <img src="res/works/lighthouse.jpg" alt="" />
-        <img src="res/works/mona.png" alt="" />
-        <img src="res/works/moonwindow.jpg" alt="" />
-        <img src="res/works/pearl.png" alt="" />
-        <img src="res/works/seab1.jpg" alt="" />
-        <img src="res/works/seaw.jpg" alt="" />
-        <img src="res/works/selfportrait.jpeg" alt="" />
-        <img src="res/works/selfportrait2.png" alt="" />
-        <img src="res/works/SELF-PORTRAIT3.jpg" alt="" />
-        <img src="res/works/SELF-PORTRAIT5.jpg" alt="" />
-        <img src="res/works/snowb.jpg" alt="" />
-        <img src="res/works/twintowersbw.jpeg" alt="" />
-        <img src="res/works/wavesr.jpeg" alt="" />
-        <img src="res/works/wavesw.jpeg" alt="" />
-        <img src="res/works/window1.jpeg" alt="" />
-        <img src="res/works/window2.jpeg" alt="" />
-      </section>
-    </main>
-    <footer>
-      <p>
-        &copy; 2025 Ivan Arena. All rights reserved.
-        <a href="mailto:parlementmgmt@gmail.com"
-          >Inquiries: parlementmgmt@gmail.com</a
-        >
-      </p>
-    </footer>
+    <div class="page-background" id="bg-home">
+      <img src="res/works/SELF-PORTRAIT.jpg" alt="" class="active" />
+      <img src="res/works/SELF-PORTRAIT3.jpg" alt="" />
+      <img src="res/works/SELF-PORTRAIT5.jpg" alt="" />
+      <img src="res/works/selfportrait.jpeg" alt="" />
+      <img src="res/works/selfportrait2.png" alt="" />
+    </div>
+
+    <div class="page-content">
+      <div class="text-content">
+        <div class="main-text">
+          <h1>Ivan Arena</h1>
+          <p>visual artist and<br />published author</p>
+          <p class="info">currently based<br />in Wien, AT</p>
+          <p class="info">
+            for inquiries:<br /><a href="mailto:parlementmgmt@gmail.com"
+              >parlementmgmt@gmail.com</a
+            >
+          </p>
+        </div>
+        <nav class="nav-links">
+          <a href="works.html">works →</a>
+          <a href="publications.html">publications →</a>
+          <a href="about.html">about →</a>
+        </nav>
+      </div>
+    </div>
+
     <script src="main.js"></script>
   </body>
 </html>
