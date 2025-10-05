@@ -2,6 +2,16 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Portfolio loaded');
   
+  // Function to shuffle array (Fisher-Yates shuffle)
+  function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }
+  
   // Function to rotate background images
   function rotateBackgrounds(containerId) {
     const container = document.getElementById(containerId);
@@ -10,16 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const images = Array.from(container.querySelectorAll('img'));
     if (images.length <= 1) return;
     
+    // Shuffle the images array for random order
+    const shuffledImages = shuffleArray(images);
     let currentIndex = 0;
     
-    // Show first image
-    images[0].classList.add('active');
+    // Show first image in shuffled array
+    shuffledImages[0].classList.add('active');
     
-    // Rotate every 5 seconds
+    // Rotate every 15 seconds with random selection
     setInterval(() => {
-      images[currentIndex].classList.remove('active');
-      currentIndex = (currentIndex + 1) % images.length;
-      images[currentIndex].classList.add('active');
+      shuffledImages[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % shuffledImages.length;
+      shuffledImages[currentIndex].classList.add('active');
     }, 15000);
   }
   
