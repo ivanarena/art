@@ -1,6 +1,19 @@
 // Background image rotation for home and about pages
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Portfolio loaded');
+  
+  // Prevent all images from being dragged
+  document.addEventListener('dragstart', (e) => {
+    if (e.target.tagName === 'IMG') {
+      e.preventDefault();
+      return false;
+    }
+  });
+  
+  // Add draggable=false attribute to all images
+  const allImages = document.querySelectorAll('img');
+  allImages.forEach(img => {
+    img.setAttribute('draggable', 'false');
+  });
   
   // Function to shuffle array (Fisher-Yates shuffle)
   function shuffleArray(array) {
@@ -47,8 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.textContent = '© 2025 Ivan Arena. All rights reserved.';
     document.body.appendChild(overlay);
 
-    console.log('Copyright overlay created');
-
     // Add double-click handler to all images
     const images = document.querySelectorAll('.works-grid img, .works-gallery-preview img, .self-portraits-preview img');
     console.log('Found images:', images.length);
@@ -57,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Double-click to show copyright
       img.addEventListener('dblclick', (e) => {
         e.preventDefault();
-        console.log('Double-click detected');
         overlay.classList.add('show');
         setTimeout(() => {
           overlay.classList.remove('show');
@@ -77,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Prevent context menu (right-click)
       img.addEventListener('contextmenu', (e) => {
         e.preventDefault();
-        console.log('Context menu prevented');
       });
     });
   }
