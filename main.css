@@ -93,6 +93,8 @@ a:hover {
   -ms-user-select: none;
   -webkit-touch-callout: none;
   pointer-events: none;
+  background: #000;
+  will-change: opacity;
 }
 
 .page-background img.active {
@@ -200,6 +202,20 @@ a:hover {
   cursor: default;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  opacity: 0;
+  animation: fadeIn 0.6s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* ===== COPYRIGHT OVERLAY ===== */
@@ -267,6 +283,9 @@ a:hover {
   -ms-user-select: none;
   -webkit-touch-callout: none;
   pointer-events: none;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  opacity: 0;
+  animation: fadeIn 0.6s ease-in forwards;
 }
 
 .publication-info {
