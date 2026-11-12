@@ -27,11 +27,20 @@
    history and modifier-clicks keep their normal behavior in every browser. */
 @view-transition { navigation: auto; }
 ::view-transition-group(root) { animation-duration: 440ms; }
-::view-transition-old(root) { animation: soft-dismiss 220ms ease both; mix-blend-mode: normal; }
-::view-transition-new(root) { animation: soft-reveal 440ms cubic-bezier(.22,.8,.2,1) both; mix-blend-mode: normal; }
-@keyframes soft-reveal { from { opacity: 0; filter: blur(8px); } to { opacity: 1; filter: blur(0px); } }
-@keyframes soft-dismiss { from { opacity: 1; filter: blur(0px); } to { opacity: 0; filter: blur(8px); } }
-.intro-copy, .contact-links, .copyright { animation: soft-reveal 560ms cubic-bezier(.22,.8,.2,1) backwards; }
+::view-transition-old(root) { animation: page-dismiss 220ms ease both; mix-blend-mode: normal; }
+::view-transition-new(root) { animation: page-reveal 440ms cubic-bezier(.22,.8,.2,1) both; mix-blend-mode: normal; }
+@keyframes soft-reveal { from { opacity: 0; filter: blur(4px); } to { opacity: 1; filter: blur(0px); } }
+@keyframes page-reveal { from { opacity: 0; } to { opacity: 1; } }
+@keyframes page-dismiss { from { opacity: 1; } to { opacity: 0; } }
+@keyframes intro-arrive { from { opacity: 0; filter: blur(6px); transform: translateY(8px); } to { opacity: 1; filter: blur(0px); transform: none; } }
+@keyframes gallery-arrive { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: none; } }
+.intro-copy, .contact-links { animation: soft-reveal 500ms cubic-bezier(.22,.8,.2,1) backwards; }
+.copyright { animation: page-reveal 420ms 160ms ease backwards; }
+/* Blur only the small text block. The photo strip flies in as one composited
+   surface; no per-photo blur, permanent layer hints, or animation loop. */
+.home-page .intro { animation: intro-arrive 560ms cubic-bezier(.22,.8,.2,1) backwards; }
+.home-page .intro-copy, .home-page .contact-links { animation: none; }
+.home-page .hero > main { animation: gallery-arrive 700ms 100ms cubic-bezier(.22,.8,.2,1) backwards; }
 
 * { box-sizing: border-box; }
 body {
@@ -101,8 +110,6 @@ main { display: grid; place-items: center; width: 100%; overflow: clip; }
   transform: translateY(calc(var(--home-y) * var(--home-scale)));
   max-width: none;
   object-fit: contain;
-  transition: filter 340ms ease, opacity 340ms ease;
-  animation: soft-reveal 660ms cubic-bezier(.22,.8,.2,1) backwards;
   box-shadow: 0 0 1px #0003;
   user-select: none;
   -webkit-user-drag: none;
@@ -170,6 +177,7 @@ dialog::backdrop { background: var(--paper); }
 .rail { position: absolute; inset: var(--stage-top, 80px) 0 var(--stage-bottom, 100px); overflow: hidden; overflow-anchor: none; touch-action: pan-y pinch-zoom; cursor: grab; outline: none; }
 .rail:focus-visible { outline: 1px dashed currentColor; outline-offset: -12px; }
 .rail.is-dragging { cursor: grabbing; }
+.rail.is-moving .gallery-card, .rail.is-dragging .gallery-card { will-change: transform; }
 /* Small, non-interactive frosted strips: progressively blur only the viewport
    edges, not individual photographs or the controls. No scroll-time JS. */
 .gallery-edge {
@@ -195,7 +203,6 @@ dialog::backdrop { background: var(--paper); }
   height: var(--card-height);
   display: grid;
   place-items: center;
-  will-change: transform;
   user-select: none;
   cursor: pointer;
 }
@@ -212,7 +219,7 @@ dialog::backdrop { background: var(--paper); }
   opacity: 1;
 }
 .gallery-card img, .context-card img {
-  transition: transform 420ms cubic-bezier(.22,.8,.2,1), filter 340ms ease, opacity 340ms ease;
+  transition: transform 360ms cubic-bezier(.22,.8,.2,1), opacity 240ms ease;
   user-select: none;
   -webkit-user-drag: none;
   -webkit-touch-callout: none;
@@ -220,20 +227,20 @@ dialog::backdrop { background: var(--paper); }
 @media (hover: hover) {
   .gallery-card:hover img, .context-card:hover img { transform: scale(1.035); }
 }
-.gallery.is-opening .chrome { animation: reveal-chrome 650ms 120ms both; }
+.gallery.is-opening .chrome { animation: reveal-chrome 360ms 60ms both; }
 @keyframes reveal-chrome { from { opacity: 0; } to { opacity: 1; } }
 .gallery.is-closing, .viewer.is-closing { background: transparent; }
-.gallery.is-closing::backdrop { animation: uncover-page 650ms ease both; }
-.viewer.is-closing::backdrop { animation: uncover-page 480ms ease both; }
+.gallery.is-closing::backdrop { animation: uncover-page 460ms ease both; }
+.viewer.is-closing::backdrop { animation: uncover-page 400ms ease both; }
 .gallery.is-closing .chrome, .viewer.is-closing .chrome { animation: hide-chrome 180ms ease both; }
 /* Animate each filter surface, never their parent: ancestor opacity would
    isolate the backdrop and make the frosting pop instead of fading smoothly. */
-dialog[open]:not(.is-closing):not(.is-inspecting) .gallery-edge > span { animation: reveal-edge 660ms ease both; }
-dialog[open]:not(.is-closing):not(.is-inspecting) .gallery-edge::after { animation: reveal-chrome 660ms ease both; }
-dialog.is-closing .gallery-edge > span { animation: soften-edge-out 440ms ease both; }
-dialog.is-closing .gallery-edge::after { animation: soften-edge-tint-out 440ms ease both; }
-@keyframes reveal-edge { from { opacity: 0; -webkit-backdrop-filter: blur(0px); backdrop-filter: blur(0px); } to { opacity: 1; -webkit-backdrop-filter: blur(var(--edge-blur)); backdrop-filter: blur(var(--edge-blur)); } }
-@keyframes soften-edge-out { from { opacity: var(--edge-from-opacity, 1); -webkit-backdrop-filter: var(--edge-from-filter, blur(var(--edge-blur))); backdrop-filter: var(--edge-from-filter, blur(var(--edge-blur))); } to { opacity: 0; -webkit-backdrop-filter: blur(0px); backdrop-filter: blur(0px); } }
+dialog[open]:not(.is-closing):not(.is-inspecting) .gallery-edge > span { animation: reveal-edge 400ms ease both; }
+dialog[open]:not(.is-closing):not(.is-inspecting) .gallery-edge::after { animation: reveal-chrome 400ms ease both; }
+dialog.is-closing .gallery-edge > span { animation: soften-edge-out 320ms ease both; }
+dialog.is-closing .gallery-edge::after { animation: soften-edge-tint-out 320ms ease both; }
+@keyframes reveal-edge { from { opacity: 0; } to { opacity: 1; } }
+@keyframes soften-edge-out { from { opacity: var(--edge-from-opacity, 1); } to { opacity: 0; } }
 @keyframes soften-edge-tint-out { from { opacity: var(--edge-tint-opacity, 1); } to { opacity: 0; } }
 .gallery.is-closing .rail, .gallery.is-closing .chrome, .viewer.is-closing > * { pointer-events: none; }
 @keyframes uncover-page { from { opacity: 1; } to { opacity: 0; } }

@@ -112,7 +112,7 @@ test('page arrivals and native internal-navigation transitions share blur/fade m
     addEventListener('pagereveal', event => { window.sawNativeTransition = Boolean(event.viewTransition); });
   });
   await page.goto('/');
-  await expect(page.locator('.intro-copy')).toHaveCSS('animation-name', 'soft-reveal');
+  await expect(page.locator('.home-page .intro')).toHaveCSS('animation-name', 'intro-arrive');
   await page.getByRole('link', { name: 'Elsewhere', exact: true }).click();
   await expect.poll(() => page.evaluate(() => window.sawNativeTransition)).toBe(true);
   await page.getByRole('link', { name: 'Books', exact: true }).click();

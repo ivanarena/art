@@ -158,11 +158,11 @@
   }
 
   // FLIP: move each physical print from its actual old rectangle to the new one.
-  // The image keeps its aspect ratio throughout; there is no whole-screen zoom.
-  function transitionPrint(element, rectangle, { reverse = false, duration = 780, delay = 0, fill = reverse ? 'forwards' : 'backwards' } = {}) {
+  // The image keeps its aspect ratio throughout. Animate only transform/opacity:
+  // large moving bitmaps never need a new blur raster on every frame.
+  function transitionPrint(element, rectangle, { reverse = false, duration = 560, delay = 0, fill = reverse ? 'forwards' : 'backwards' } = {}) {
     const before = element.getBoundingClientRect();
     const appearance = getComputedStyle(element);
-    const beforeFilter = appearance.filter;
     const beforeOpacity = appearance.opacity;
     for (const animation of element.getAnimations()) animation.cancel();
     if (!rectangle || !rectangle.width || reducedMotion.matches) return null;
@@ -175,8 +175,8 @@
     const scale = Math.min(rectangle.width / destination.width, rectangle.height / destination.height);
     const displaced = `translate(${dx}px, ${dy}px) ${transform} scale(${scale})`;
     const keyframes = [
-      { transform: displaced, filter: 'blur(10px)', opacity: 0 },
-      { transform: transform || 'none', filter: 'blur(0px)', opacity: 1 },
+      { transform: displaced, opacity: 0 },
+      { transform: transform || 'none', opacity: 1 },
     ];
     if (reverse) {
       // Start from the currently visible frame, even if opening was interrupted.
@@ -184,10 +184,8 @@
       const fromY = before.y + before.height / 2 - destination.y - destination.height / 2;
       const fromScale = Math.min(before.width / destination.width, before.height / destination.height);
       keyframes[0].transform = `translate(${fromX}px, ${fromY}px) ${transform} scale(${fromScale})`;
-      keyframes[0].filter = beforeFilter === 'none' ? 'blur(0px)' : beforeFilter;
       keyframes[0].opacity = beforeOpacity;
       keyframes[1].transform = displaced;
-      keyframes[1].filter = 'blur(10px)';
       keyframes[1].opacity = 0;
     }
     return element.animate(keyframes, {
@@ -202,7 +200,6 @@
       for (const layer of edge.children) {
         const style = getComputedStyle(layer);
         layer.style.setProperty('--edge-from-opacity', style.opacity);
-        layer.style.setProperty('--edge-from-filter', style.backdropFilter || style.webkitBackdropFilter || 'none');
       }
     }
   }
@@ -322,17 +319,18 @@
 
   function animate(time) {
     frame = 0;
-    if (!gallery.open || viewer.open) return;
+    if (!gallery.open || viewer.open) { rail.classList.remove('is-moving'); return; }
     const dt = lastTime ? Math.min(time - lastTime, 48) : 16;
     lastTime = time;
     const distance = target - position;
     position = reducedMotion.matches || Math.abs(distance) < .001 ? target : position + distance * (1 - Math.exp(-dt / 105));
     render();
     if (position !== target) frame = requestAnimationFrame(animate);
-    else lastTime = 0;
+    else { lastTime = 0; rail.classList.remove('is-moving'); }
   }
 
   function requestRender() {
+    if (!reducedMotion.matches) rail.classList.add('is-moving');
     if (!frame) frame = requestAnimationFrame(animate);
   }
 
@@ -362,13 +360,15 @@
     measure();
     render();
     for (const [slot, card] of cards) {
-      if (mobileRibbon.enabled && !mobileRibbon.visible(card)) continue;
+      if (!mobileRibbon.visible(card)) continue;
       const source = origins.get(wrap(slot)) || pile[((slot % pile.length) + pile.length) % pile.length].getBoundingClientRect();
-      transitionPrint(card, source, { duration: 880, delay: Math.min(100, Math.abs(slot - Math.round(position)) * 16) });
+      transitionPrint(card, source, { duration: 620, delay: Math.min(80, Math.abs(slot - Math.round(position)) * 12) });
     }
-    gallery.classList.add('is-opening');
-    clearTimeout(openingTimer);
-    openingTimer = setTimeout(() => gallery.classList.remove('is-opening'), 1000);
+    if (!reducedMotion.matches) {
+      gallery.classList.add('is-opening');
+      clearTimeout(openingTimer);
+      openingTimer = setTimeout(() => gallery.classList.remove('is-opening'), 740);
+    }
     rail.focus({ preventScroll: true });
   }
 
@@ -391,10 +391,10 @@
     const pile = homePrints();
     const destinations = new Map(pile.map(image => [Number(image.dataset.index), image.getBoundingClientRect()]));
     const motions = [...cards].map(([slot, card]) => {
-      if (mobileRibbon.enabled && !mobileRibbon.visible(card)) return null;
+      if (!mobileRibbon.visible(card)) return null;
       const fallback = pile[((slot % pile.length) + pile.length) % pile.length].getBoundingClientRect();
       return transitionPrint(card, destinations.get(wrap(slot)) || fallback, {
-        reverse: true, duration: 650, delay: Math.min(70, Math.abs(slot - Math.round(position)) * 12),
+        reverse: true, duration: 460, delay: Math.min(48, Math.abs(slot - Math.round(position)) * 10),
       });
     });
     await Promise.allSettled(motions.filter(Boolean).map(animation => animation.finished));
@@ -426,7 +426,7 @@
     frame = 0;
     lastTime = 0;
     drag = null;
-    rail.classList.remove('is-dragging');
+    rail.classList.remove('is-dragging', 'is-moving');
     // Leave the pile intact and remember where the visitor was wandering.
     for (const animation of rail.getAnimations({ subtree: true })) animation.cancel();
     position = target;
@@ -605,6 +605,7 @@
     position = target = slot;
     for (const animation of rail.getAnimations({ subtree: true })) animation.cancel();
     render();
+    rail.classList.remove('is-moving');
     gallery.classList.add('is-inspecting');
     viewer.showModal();
     showWork(index, origins);
@@ -620,9 +621,9 @@
     // Reveal the real ribbon underneath and return each print to its place.
     gallery.classList.remove('is-inspecting');
     const destinations = ribbonSnapshots();
-    const motions = [transitionPrint(inspection, destinations.get(inspected), { reverse: true, duration: 480 })];
+    const motions = [transitionPrint(inspection, destinations.get(inspected), { reverse: true, duration: 400 })];
     for (const card of $('viewer-context').children) {
-      motions.push(transitionPrint(card, destinations.get(Number(card.dataset.index)), { reverse: true, duration: 480 }));
+      motions.push(transitionPrint(card, destinations.get(Number(card.dataset.index)), { reverse: true, duration: 400 }));
     }
     await Promise.allSettled(motions.filter(Boolean).map(animation => animation.finished));
     viewer.classList.remove('is-closing');
@@ -706,6 +707,22 @@
   window.visualViewport?.addEventListener('resize', () => scheduleLayout(true));
   const chromeObserver = new ResizeObserver(() => scheduleLayout());
   document.querySelectorAll('.chrome').forEach(element => chromeObserver.observe(element));
+
+  reducedMotion.addEventListener('change', () => {
+    if (!reducedMotion.matches) return;
+    // End in-flight entrances/exits as well as future motion when the system
+    // preference changes. Static edge frosting is deliberately unaffected.
+    for (const animation of document.getAnimations()) animation.finish();
+    rail.classList.remove('is-moving');
+    if (gallery.open && !viewer.open && !closingGallery) {
+      if (mobileRibbon.enabled) {
+        if (mobileRibbon.target !== null) mobileRibbon.move(0, true);
+      } else {
+        position = target;
+        render();
+      }
+    }
+  });
 
   // These deter casual saving, not screenshots or determined copying. Pixels
   // delivered to a browser can always be captured; don't disable browser keys.
