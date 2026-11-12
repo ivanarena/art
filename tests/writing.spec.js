@@ -24,7 +24,7 @@ test('Elsewhere lists only the three verified publications with direct links and
     await expect(entry.locator('a')).toHaveAttribute('target', '_blank');
     await expect(entry.locator('a')).toHaveAttribute('rel', 'noopener noreferrer');
   }
-  await expect(page.locator('body')).toHaveCSS('font-family', /Karla/);
+  await expect(page.locator('body')).toHaveCSS('font-family', /Afacad/);
   await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
   await expect(page.locator('.copyright')).toContainText(new Date().getFullYear().toString());
   await page.screenshot({ path: `test-results/elsewhere-${test.info().project.name}.png`, fullPage: true });

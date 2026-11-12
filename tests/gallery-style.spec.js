@@ -4,12 +4,12 @@ import sharp from 'sharp';
 const ink = 'rgb(28, 27, 25)';
 const mutedInk = 'rgb(106, 103, 98)';
 
-test('natural-case Karla typography and white backgrounds are shared by every page and gallery layer', async ({ page }) => {
+test('natural-case Afacad typography and white backgrounds are shared by every page and gallery layer', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   for (const path of ['/', '/gallery.html', '/books.html', '/elsewhere.html']) {
     await page.goto(path);
     await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
-    await expect(page.locator('body')).toHaveCSS('font-family', /Karla/);
+    await expect(page.locator('body')).toHaveCSS('font-family', /Afacad/);
     await expect(page.locator('body')).toHaveCSS('text-transform', 'none');
     if (path === '/books.html') await expect(page.locator('.book-spine').first()).toHaveCSS('text-transform', 'none');
     expect(await page.locator('body').evaluate(body => getComputedStyle(body, '::before').backgroundImage)).toBe('none');

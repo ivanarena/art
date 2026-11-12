@@ -14,7 +14,7 @@ Open http://127.0.0.1:4173. This automatically exports and serves `dist/`, which
 
 `index.html` opens with the artist's full introduction, navigation and horizontal photo strip centered together as a compact group in the viewport. The gallery stays on the homepage: clicking a photograph expands the endless horizontal ribbon at that work, without navigating to another page. Inspecting a ribbon photograph opens the fitted detail view. Closing folds the gallery back into the homepage preview.
 
-The site uses self-hosted **Karla Regular (400)** with sentence-case interface text throughout, with white backgrounds, soft-black text and warm-grey secondary credits. Book covers and photographs themselves are unchanged. Books and writing link directly to this homepage. The old `gallery.html` URL redirects to it. Without JavaScript, the introduction, links and a native horizontally scrollable photographic selection remain available.
+The site uses self-hosted **Afacad Regular (400)** with sentence-case interface text throughout, with white backgrounds, soft-black text and warm-grey secondary credits. Book covers and photographs themselves are unchanged. Books and writing link directly to this homepage. The old `gallery.html` URL redirects to it. Without JavaScript, the introduction, links and a native horizontally scrollable photographic selection remain available.
 
 ## Motion
 
@@ -66,7 +66,7 @@ npm ci
 npm run assets
 ```
 
-Typography: locally hosted **Karla Regular (400)**, with proper sentence capitalization for the introduction, navigation and interface labels. Published work titles and link destinations retain their original form. The regular Latin WOFF2 is self-hosted (approximately 13KB); there are no runtime Google Fonts requests. Licensed under the SIL Open Font License (see `res/fonts/Karla-OFL.txt`). White backgrounds with soft-black text (`#1c1b19`), warm-grey secondary credits, and restrained black hover states. Navigation links are understated and underline on hover or keyboard focus. Photographs and book artwork retain their original colors. The full artist introduction and links are visible above the centered gallery strip. The expanded gallery retains quiet two-line artwork credits.
+Typography: locally hosted **Afacad Regular (400)**, with proper sentence capitalization for the introduction, navigation and interface labels. Published work titles and link destinations retain their original form. The regular Latin WOFF2 is self-hosted (approximately 13KB); there are no runtime Google Fonts requests. Licensed under the SIL Open Font License (see `res/fonts/Afacad-OFL.txt`). White backgrounds with soft-black text (`#1c1b19`), warm-grey secondary credits, and restrained black hover states. Navigation links are understated and underline on hover or keyboard focus. Photographs and book artwork retain their original colors. The full artist introduction and links are visible above the centered gallery strip. The expanded gallery retains quiet two-line artwork credits.
 
 ## Tests
 

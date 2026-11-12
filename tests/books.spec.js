@@ -18,7 +18,7 @@ test('books page is linked, self-hosted and separate from the photograph gallery
   await expect(page.getByRole('heading', { name: 'Books', exact: true })).toBeVisible();
   await expect(page.locator('.book')).toHaveCount(titles.length);
   await page.evaluate(() => Promise.all([...document.querySelectorAll('.book-front img')].map(image => image.decode())));
-  await expect(page.locator('body')).toHaveCSS('font-family', /Karla/);
+  await expect(page.locator('body')).toHaveCSS('font-family', /Afacad/);
   await expect(page.locator('.book-object').first()).toHaveCSS('transform-style', 'preserve-3d');
   await expect(page.locator('.book').first()).toHaveAttribute('aria-expanded', 'true');
   await expect(page.locator('#book-title')).toHaveText(titles[0]);

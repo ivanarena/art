@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('homepage centers the Karla introduction and gallery together without forced capitals', async ({ page }) => {
+test('homepage centers the Afacad introduction and gallery together without forced capitals', async ({ page }) => {
   const errors = [], external = [], large = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => { if (response.status() >= 400) errors.push(response.url()); });
@@ -14,12 +14,12 @@ test('homepage centers the Karla introduction and gallery together without force
   await expect(page.locator('#pile')).toBeVisible();
   await expect(page.locator('#gallery:visible, #viewer:visible')).toHaveCount(0);
   await expect(page.locator('h1')).toHaveText('Hey, I’m Ivan Arena. I’m an artist based in Vienna, working with photography, music and literature. See my selected work.');
-  await expect(page.locator('body')).toHaveCSS('font-family', /Karla/);
+  await expect(page.locator('body')).toHaveCSS('font-family', /Afacad/);
   for (const selector of ['h1', '.contact-links', '.copyright']) {
     await expect(page.locator(selector)).toHaveCSS('text-transform', 'none');
     await expect(page.locator(selector)).toHaveCSS('font-weight', '400');
   }
-  expect(await page.evaluate(() => document.fonts.check('400 24px "Karla"'))).toBe(true);
+  expect(await page.evaluate(() => document.fonts.check('400 24px "Afacad"'))).toBe(true);
   await expect(page.locator('.intro .contact-links a')).toHaveCount(4);
   await expect(page.locator('.pile-image')).toHaveCount(13);
   const intro = await page.locator('.intro').boundingBox();
