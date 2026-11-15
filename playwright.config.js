@@ -10,7 +10,7 @@ export default defineConfig({
     launchOptions: process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {},
   },
   webServer: {
-    command: 'npm run preview',
+    command: 'npm run serve',
     url: 'http://127.0.0.1:4173',
     reuseExistingServer: !process.env.CI,
   },

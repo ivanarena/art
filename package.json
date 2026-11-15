@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "preview": "npm run build && python3 -m http.server 4173 --bind 127.0.0.1 --directory dist",
+    "serve": "python3 -m http.server 4173 --bind 127.0.0.1 --directory dist",
+    "preview": "npm run build && npm run serve",
     "pretest": "npm run build",
     "test": "playwright test",
     "assets": "node scripts/prepare-assets.mjs && node scripts/prepare-books.mjs",

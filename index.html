@@ -3,86 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content="Ivan Arena is an artist based in Vienna, working with photography, music and literature. Selected photographs in an expandable horizontal gallery." />
-    <meta name="theme-color" content="#ffffff" />
-    <title>Ivan Arena — Selected work</title>
+    <meta name="description" content="Ivan Arena is an artist based in Vienna, working with photography, music and literature." />
+    <meta name="theme-color" content="#000000" />
+    <title>Ivan Arena</title>
     <link rel="icon" href="res/favicon.ico" />
-    <link rel="preload" href="res/fonts/afacad-regular-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="main.css" />
     <script src="site.js"></script>
-    <script src="works.js" defer></script>
-    <script src="mobile-gallery.js" defer></script>
-    <script src="main.js" defer></script>
   </head>
   <body class="home-page">
-    <div class="hero">
+    <!-- SITE-NAV -->
+    <main class="home-main">
       <header class="intro">
-        <h1 class="intro-copy">
-          Hey, I’m Ivan Arena. I’m an artist based in Vienna, working with photography, music and literature. See my selected work.
-        </h1>
-        <nav class="contact-links" aria-label="Links">
-          <a href="books.html">Books</a>
-          <a href="elsewhere.html">Elsewhere</a>
-          <a href="https://www.instagram.com/ivanknowswhat/" target="_blank" rel="noopener noreferrer">Instagram</a>
-          <a href="mailto:parlementmgmt@gmail.com">Email</a>
-        </nav>
+        <img class="home-portrait" src="res/portraits/ivan.webp" alt="Portrait of Ivan Arena" width="960" height="960" decoding="async" />
+        <h1 class="intro-copy">Hey, I’m Ivan Arena. I’m an artist based in Vienna, working with photography, music and literature.</h1>
       </header>
-
-      <main>
-        <button class="pile" id="pile" aria-label="Browse selected photographs horizontally. Select a photograph to open the endless gallery." aria-haspopup="dialog" data-open>
-          <span id="pile-images" aria-hidden="true"></span>
-        </button>
-        <noscript><style>.pile { display: none; }</style><div class="static-gallery" id="fallback-images"></div><p class="no-script">Enable JavaScript to expand and inspect the photographs.</p></noscript>
-      </main>
-    </div>
-
+    </main>
     <footer class="copyright">© <span id="year">2026</span> Ivan Arena. All rights reserved.</footer>
-
-    <dialog class="gallery" id="gallery" aria-labelledby="gallery-title">
-      <div class="gallery-top chrome">
-        <h2 id="gallery-title" class="sr-only">Selected work</h2>
-        <button id="close-gallery" aria-label="Close gallery"><span aria-hidden="true">×</span></button>
-      </div>
-      <div class="rail" id="rail" tabindex="0" role="region" aria-label="Endless artwork gallery" aria-describedby="gallery-help"></div>
-      <div class="gallery-edge" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div class="gallery-edge gallery-edge-end" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div class="gallery-bottom chrome">
-        <div class="work-credit" id="gallery-credit">
-          <p class="credit-title" id="gallery-work-title"></p>
-          <p class="credit-details"><span id="gallery-medium"></span> · <span id="gallery-year"></span></p>
-        </div>
-        <p id="gallery-help" class="sr-only">Scroll or drag to browse. Use arrow keys to move and Enter to inspect.</p>
-        <div class="navigation">
-          <button id="previous" aria-label="Previous work">←</button>
-          <button id="inspect" aria-label="Inspect current work"><span id="position" class="sr-only"></span><span aria-hidden="true">↗</span></button>
-          <button id="next" aria-label="Next work">→</button>
-        </div>
-      </div>
-      <p class="sr-only" id="gallery-status" role="status" aria-live="polite"></p>
-    </dialog>
-
-    <dialog class="viewer" id="viewer" aria-labelledby="work-title">
-      <div class="viewer-top chrome">
-        <button id="close-viewer" aria-label="Back to gallery"><span aria-hidden="true">×</span></button>
-      </div>
-      <div class="viewer-context" id="viewer-context" role="group" aria-label="Previous and next works"></div>
-      <div class="inspection" id="inspection">
-        <img id="detail-image" alt="" draggable="false" />
-        <p id="image-error" hidden>This image couldn't load. Please try again.</p>
-      </div>
-      <div class="gallery-edge" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div class="gallery-edge gallery-edge-end" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div class="viewer-bottom chrome">
-        <div class="work-credit" id="viewer-credit">
-          <h2 class="credit-title" id="work-title"></h2>
-          <p class="credit-details"><span id="detail-medium"></span> · <span id="detail-year"></span></p>
-        </div>
-        <div class="navigation">
-          <button id="detail-previous" aria-label="Inspect previous work">←</button>
-          <span id="detail-position" class="sr-only"></span>
-          <button id="detail-next" aria-label="Inspect next work">→</button>
-        </div>
-      </div>
-    </dialog>
   </body>
 </html>

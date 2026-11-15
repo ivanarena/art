@@ -1,0 +1,68 @@
+[
+  {
+    "id": "the-second-thought",
+    "title": "The Second Thought",
+    "meta": "Hybrid work · 2026",
+    "language": "en",
+    "description": [
+      "An experimental work at the intersection of poetry and prose in the form of a chaotic, revolting and challenging stream-of-consciousness dancing between drunkenness and delirium accompanied by sparse disturbing illustrations."
+    ],
+    "url": "https://www.amazon.com/dp/B0HB2SYTR4",
+    "cover": "res/book-covers/the_second_thought.webp",
+    "width": 625,
+    "height": 1000,
+    "ratio": 0.625,
+    "spineColor": "#3b4029",
+    "spineInk": "#ede9dc"
+  },
+  {
+    "id": "and-then-we-walk-out",
+    "title": "And Then We Walk Out",
+    "meta": "Poems · 2025",
+    "language": "en",
+    "description": [
+      "The self-proclaimed neo-symbolist manifesto and first English-language work from the Italian-born author of Crepuscolo and Versi Liberi."
+    ],
+    "url": "https://www.amazon.com/dp/B0FMJV8SJL",
+    "cover": "res/book-covers/and_then_we_walk_out.webp",
+    "width": 313,
+    "height": 500,
+    "ratio": 0.626,
+    "spineColor": "#a5aaa6",
+    "spineInk": "#28302c"
+  },
+  {
+    "id": "crepuscolo",
+    "title": "Crepuscolo",
+    "meta": "Novel · 2024",
+    "language": "it",
+    "description": [
+      "“Dipinto in una serie di momenti tra profondo desiderio e vulnerabilità, l’intimo viaggio di due anime che si intrecciano in un’esplorazione dei confini stessi dell’eros, in cui l’amore diviene un rito, un rischio ed, infine, un enigma da proteggere.”",
+      "Il romanzo di debutto dell'autore di Versi Liberi, scritto a cavallo tra Sicilia, Nord-Italia e Danimarca."
+    ],
+    "url": "https://www.amazon.com/dp/B0DP4HZVNV",
+    "cover": "res/book-covers/crepuscolo.webp",
+    "width": 313,
+    "height": 500,
+    "ratio": 0.626,
+    "spineColor": "#bcb69c",
+    "spineInk": "#674d3b"
+  },
+  {
+    "id": "versi-liberi",
+    "title": "Versi Liberi",
+    "meta": "Poems · 2023",
+    "language": "it",
+    "description": [
+      "\"Uno sguardo nostalgico e contemplativo all'irrequietezza ed alla spontanea ingenuità dell'adolescenza, comparati al giudizio consapevole e placido della maturità. Un ritratto autentico, quotidiano, di un'identità in divenire, raccontato in versi, tra ermetismi che guardano alle avanguardie ma senza mai disdegnare i sapori classici.\"",
+      "Ivan Arena nasce a Messina nel 2002. Nel 2019 si unisce alla redazione della webzine LaScimmiaPensa.com, alla quale contribuirà con recensioni ed editoriali a tema musicale. Nel 2020 si trasferisce a Padova per intraprendere gli studi di informatica e, successivamente, a Copenhagen, Danimarca, per proseguire con gli stessi, dopo aver speso un breve periodo a Cork, Irlanda, per lavoro. Nel gennaio del 2021, pubblica il suo primo lavoro con Arcana Edizioni: la prima biografia scritta del rapper Salmo, \"S.A.L.M.O.\". Un anno più tardi, partecipa alla pubblicazione collettiva de LaScimmiaPensa.com con il medesimo editore, \"Gli anni Duemila in 100 canzoni\". Parallelamente alla scrittura, l'autore porta avanti diversi progetti artistici tra arti visive e produzioni musicali."
+    ],
+    "url": "https://www.amazon.com/dp/B0CRRN5X4M",
+    "cover": "res/book-covers/versi_liberi.webp",
+    "width": 332,
+    "height": 500,
+    "ratio": 0.664,
+    "spineColor": "#4e2c42",
+    "spineInk": "#f2eae1"
+  }
+]

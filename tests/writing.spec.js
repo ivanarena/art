@@ -15,6 +15,7 @@ test('Elsewhere lists only the three verified publications with direct links and
   await expect(page).toHaveURL(/\/elsewhere\.html$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Elsewhere');
   await expect(page.locator('.writing-entry')).toHaveCount(publications.length);
+  for (const entry of await page.locator('.writing-entry').all()) await expect(entry).toHaveCSS('border-top-width', '0px');
   for (const [i, [title, outlet, date, url]] of publications.entries()) {
     const entry = page.locator('.writing-entry').nth(i);
     await expect(entry.locator('h2')).toHaveText(title);
@@ -24,8 +25,8 @@ test('Elsewhere lists only the three verified publications with direct links and
     await expect(entry.locator('a')).toHaveAttribute('target', '_blank');
     await expect(entry.locator('a')).toHaveAttribute('rel', 'noopener noreferrer');
   }
-  await expect(page.locator('body')).toHaveCSS('font-family', /Afacad/);
-  await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  await expect(page.locator('body')).toHaveCSS('font-family', /Helvetica Neue/);
+  await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(0, 0, 0)');
   await expect(page.locator('.copyright')).toContainText(new Date().getFullYear().toString());
   await page.screenshot({ path: `test-results/elsewhere-${test.info().project.name}.png`, fullPage: true });
   for (const privateFile of ['submission-status.md', 'bios.md', 'WAYFARER-ACCEPTANCE-2026-10-09.md', 'docs/published-writing.md']) {
@@ -38,12 +39,13 @@ test('writing, books and photographs link to one another', async ({ page }) => {
   await page.goto('/elsewhere.html');
   await expect(page.getByRole('link', { name: 'Instagram', exact: true })).toHaveAttribute('href', 'https://www.instagram.com/ivanknowswhat/');
   await expect(page.getByRole('link', { name: 'Email', exact: true })).toHaveAttribute('href', 'mailto:parlementmgmt@gmail.com');
+  await page.getByRole('link', { name: 'Selected works', exact: true }).click();
   await page.getByRole('link', { name: 'Books', exact: true }).click();
   await expect(page).toHaveURL(/\/books\.html$/);
   await page.getByRole('link', { name: 'Elsewhere', exact: true }).click();
   await expect(page.locator('.writing-list')).toBeVisible();
-  await page.getByRole('link', { name: 'Selected work', exact: true }).click();
-  await expect(page.locator('#pile')).toBeVisible();
+  await page.getByRole('link', { name: 'Selected works', exact: true }).click();
+  await expect(page.locator('.series-name')).toHaveCount(3);
 });
 
 test('published writing and navigation fit narrow and landscape screens', async ({ page }) => {

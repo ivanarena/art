@@ -1,85 +1,75 @@
-# Ivan Arena — selected work
+# Ivan Arena — portfolio
 
-A static portfolio with an introduction and expandable horizontal gallery centered together vertically and horizontally on the homepage, plus separate books and published-writing pages. No runtime dependencies, third-party requests, tracking, or frontend compilation.
+A static, white-on-black portfolio with selected photography, books and published writing. No frontend framework, runtime dependencies, tracking or external font requests.
 
-## Preview
+## Develop
 
-```sh
-npm run preview
-```
-
-Open http://127.0.0.1:4173. This automatically exports and serves `dist/`, which contains no originals or repository files. Node and Python 3 are required for the local tools, not the deployed site. The site also opens directly from `dist/index.html`.
-
-## Homepage
-
-`index.html` opens with the artist's full introduction, navigation and horizontal photo strip centered together as a compact group in the viewport. The gallery stays on the homepage: clicking a photograph expands the endless horizontal ribbon at that work, without navigating to another page. Inspecting a ribbon photograph opens the fitted detail view. Closing folds the gallery back into the homepage preview.
-
-The site uses self-hosted **Afacad Regular (400)** with sentence-case interface text throughout, with white backgrounds, soft-black text and warm-grey secondary credits. Book covers and photographs themselves are unchanged. Books and writing link directly to this homepage. The old `gallery.html` URL redirects to it. Without JavaScript, the introduction, links and a native horizontally scrollable photographic selection remain available.
-
-## Motion
-
-The homepage introduction blur/fades in once (560ms), followed by the photo strip gliding upward as one transform/opacity surface (700ms with a 100ms lead-in). Individual preview images have no entrance animations or moving blur filters. Page headings, book captions and published-writing entries keep short, text-only soft arrivals. Native same-origin View Transitions crossfade pages without full-viewport blur; other browsers keep ordinary navigation and the local arrival effects. The books page opts out of whole-page effects so its 3D objects remain sharp and opaque, including on arrival and departure. Links, modifier-clicks, history, and external destinations are not intercepted. The small shared `site.js` registers navigation-lifecycle handlers before rendering and updates the copyright year. Interrupted/skipped native transitions are handled without suppressing application errors. Reduced-motion users get instant navigation and no entrance or inspection animations, including when they enable the preference mid-animation. Static edge frosting remains.
-
-Large photograph transitions use only transform and opacity, with short eased durations and interrupted transitions continuing from their actual current position/opacity. Off-screen ribbon cards do not animate. Edge frosting uses constant blur strengths and fades only the small filter surfaces' opacity. Desktop compositing hints apply only while the ribbon is moving or being dragged; there are no perpetual animation loops or permanent per-photo layer hints. After the entrance completes, an idle homepage incurs no animation-driven script, style or layout work.
-
-## Gallery
-
-- A varied-height horizontal photo strip sits just below the introduction, with the whole group centered on both axes. A click expands the selected photograph into the full-screen endless ribbon. Full aspect ratios and consistent gaps are preserved without overlaps or cropping, including short landscape screens.
-- Browsing is horizontal on desktop and phones: wheel, trackpad, drag, arrow keys/buttons and touch swipes. Desktop uses a bounded, virtualized ribbon; phones use native horizontal momentum scrolling with three fixed cycles and idle-time rebasing. There is no autoplay.
-- Progressive masked frosting softens the left/right edges of the gallery and inspection view. It never intercepts input or blurs controls. Forced-colors mode hides these decorative layers.
-- Selecting a ribbon photograph, pressing Enter, or using the inspect control opens the fitted inspection layer, with smaller clickable blurred neighbors. Images fly/fade between their real positions without animating blur on large bitmaps; caption motion stays limited to small text areas.
-- Photos stay sharp at rest and on hover. Explicit keyboard focus on a ribbon photograph softly blurs its peers; leaving that focus restores them.
-- The inspected photograph stays fitted without cropping, click-to-zoom, original links or download controls. Neighbor buttons, arrow keys and horizontal phone swipes select other works. Browser accessibility zoom remains available.
-- Escape, the close control or empty inspection canvas returns to the expanded ribbon. Closing the ribbon returns to the homepage strip, restoring its selection, focus and page scroll. Both dialog layers contain keyboard focus; the collapsed homepage keeps normal browser tabbing.
-- Dialogs follow the dynamic viewport, safe areas and measured caption/control heights. Touch controls are at least 44px. Delayed image loads cannot replace a more recently selected photograph.
-- Credits show the catalogue title, medium and year. Editable metadata lives in `artwork-metadata.json`, keyed by original filename so deleting/reordering photographs does not rename surviving work. Current titles are catalogue/series labels rather than invented individual titles; unverified medium defaults to **Digital image**, and unknown dates remain `null`, displayed as **n.d.** Filenames, file timestamps and copyright years are not used to fabricate artwork dates. Only public credit fields are exported.
-- Reduced-motion mode skips opening/closing and caption animations, but keeps the static edge frosting. No pictures autoplay or shuffle.
-
-The curated selection is generated from the remaining photographs in `res/works/`. Book covers stay out of the photo gallery (`INCLUDE_PUBLICATIONS = false` in `scripts/prepare-assets.mjs`) and are displayed separately on `books.html`. Deleted/excluded works and their stale previews are excluded from the published gallery. Series are interleaved; the numbers within each series are catalogue positions, not newly invented artwork titles. No music assets existed in the source repo.
-
-## Books
-
-`books.html` is a separate, responsive 3D bookshelf with four publications, led by **The Second Thought** (Amazon product ID `B0HB2SYTR4`). It is described as a **hybrid work**. Its cover is copied from the existing local ebook project, and its 2026 edition year comes from the book's copyright page. Click/tap a spine to rotate its cover into view; selecting another folds the previous book away. Covers, spines, and the 3D scene stay fully sharp and opaque throughout; only the original rotation/width transitions animate the books themselves. Captions crossfade through an inert, ID-free outgoing snapshot while the live title, purchase URL, and accessible state update immediately. Rapid switches replace, rather than queue, old snapshots. Click the active book or empty canvas to fold it closed. Arrow keys select neighboring books, and Escape closes the active one. Reduced-motion preferences are respected, including changes made during an animation.
-
-Titles, publication years, and purchase links come from the original portfolio. The spines use cover-matched colors; original spine artwork was not supplied. Purchase links retain the existing Amazon product IDs.
-
-The standalone `books.js` and `books.css` do not load or change the photograph gallery. `npm run books:assets` generates metadata-free WebP cover derivatives in `res/book-covers/` without upscaling the original covers. `npm run assets` regenerates both photographs and covers. Originals in `res/publications/` remain excluded from the published output.
-
-## Elsewhere
-
-`elsewhere.html` lists three confirmed online poems with direct publisher links, outlet names, and publication dates. They were located through the author's submissions tracker and independently verified on Panel and Wayfarer public pages. No private tracker files, pending submissions, correspondence, or unpublished work are copied or exported. See `docs/published-writing.md` for public-source verification notes (development documentation, not published).
-
-The page is static, uses the shared font and navigation, and makes no requests to publishers until a reader follows a link.
-
-## Assets
-
-Originals in `res/works/` and `res/publications/` are unchanged. Committed WebP previews are capped at **960px on the longest edge (quality 80)**; focused views at **1440px (quality 82)**. Aspect ratios are preserved, metadata is stripped, and smaller images are never upscaled. Original paths are omitted from the client manifest. The horizontal ribbon uses 960px derivatives, including on high-density displays; the moderately larger 1440px derivative loads only for inspection. The ribbon's DOM stays bounded as you browse.
-
-### Image-saving limitations
-
-Image right-click, native image dragging, touch callouts, and artwork printing are discouraged, and there is no original/download link. These are **casual deterrents, not protection**: screenshots and saving pixels received by the browser cannot be prevented. Browser shortcuts and accessibility features remain available.
-
-The original files remain in the repository. `npm run build` uses an explicit allowlist to export only the webpage, scripts, fonts, favicon, and low-resolution images into `dist/`. The preview serves only that directory. The build content-versions scripts, styles, covers, and artwork URLs to prevent stale mobile caches mixing different builds. **Deploy only `dist/`**: publishing the repository root instead would expose the originals. This does not remove copies already published on the existing live site; nothing has been pushed or deployed. Display-sized derivatives will always remain copyable.
-
-To regenerate previews and `works.js` after adding or deleting artwork (deleted-work previews are automatically removed):
-
-```sh
-npm ci
-npm run assets
-```
-
-Typography: locally hosted **Afacad Regular (400)**, with proper sentence capitalization for the introduction, navigation and interface labels. Published work titles and link destinations retain their original form. The regular Latin WOFF2 is self-hosted (approximately 13KB); there are no runtime Google Fonts requests. Licensed under the SIL Open Font License (see `res/fonts/Afacad-OFL.txt`). White backgrounds with soft-black text (`#1c1b19`), warm-grey secondary credits, and restrained black hover states. Navigation links are understated and underline on hover or keyboard focus. Photographs and book artwork retain their original colors. The full artist introduction and links are visible above the centered gallery strip. The expanded gallery retains quiet two-line artwork credits.
-
-## Tests
+Requires Node.js 24 and Python 3.
 
 ```sh
 npm ci
 npx playwright install chromium
-npm test
+npm run preview
 ```
 
-Set `CHROMIUM_PATH` to use an existing Chromium binary. Desktop and mobile tests cover every remaining work, derivative privacy/quality, intro/preview geometry, single-layer gallery arrivals, animation interruption/reduced-motion changes, gallery expansion and return, regular font loading and sentence casing, fallback browsing without JavaScript, bounded endless scrolling, progressive edge blur, inspection, image-loading races, neighboring works, hover clarity, blur/fade transitions, saving deterrents, keyboard/focus restoration, native horizontal momentum, real touch gestures, and responsive captions/controls.
+Open http://127.0.0.1:4173. `npm run preview` builds the public site and serves `dist/`; `npm run serve` serves an existing build.
 
-## Publishing
+```sh
+npm test          # Build, then run desktop/mobile tests
+npm run build    # Export the production site to dist/
+```
 
-Run `npm run build`, then publish **only the contents of `dist/`** using the static host's artifact/output-directory setting. Do not publish the repository root. The export contains no originals, tests, development scripts, or Git metadata. No Node server is needed in production.
+Tests use Chromium. Set `CHROMIUM_PATH` to use an existing installation. All public-site tests run from a clean checkout; the additional original-file integrity test runs only when private source images are available locally.
+
+## Deployment
+
+**Only `dist/` is deployable. Never serve the repository root.**
+
+The GitHub Actions workflow in `.github/workflows/deploy.yml` tests pull requests and deploys successful builds of `main` to **https://ivanarena.github.io/art/**. GitHub Pages must use **GitHub Actions**, not branch-root publishing.
+
+The build copies only explicitly referenced public files, rather than entire asset directories. Originals, application archives, development metadata, fonts, scripts, templates, Git files and stray files beside previews cannot enter the deployment artifact. Public URLs are content-versioned so changed images and styles do not reuse stale caches. `.nojekyll` marks the output as plain static files.
+
+## Pages
+
+- **Home**: an indented editorial introduction. A small portrait follows the normal cursor on fine-pointer desktops above 900px; it never intercepts clicks. Reduced motion uses a stationary desktop image. Phones, coarse-pointer devices and narrow windows show no portrait.
+- **Selected works**: three series and a Books entry. Hover or visible keyboard focus shows one decorative preview ribbon at a time. Hover takes priority over restored focus after Back/Forward navigation. Books is not in the navbar.
+- **Series pages**: original project paragraphs and references beside a large, horizontally browsable image ribbon. Text and images stack on phones. Artwork is not clickable and never opens a fullscreen viewer.
+- **Books**: the title list shares the exact four-row layout, margins and height of Selected works. On mobile, previews follow the full-height list rather than squeezing it. The books stay in one large, vertically centred horizontal row. Hover or keyboard focus turns a cover; selecting a book replaces the text list with only its description and purchase link. Close or Escape restores the list and keyboard focus. Static descriptions remain readable without JavaScript.
+- **Elsewhere**: three verified published poems, with publisher links and dates. Development verification is in `docs/published-writing.md`; that file is not deployed.
+
+Every page has the same fixed, full-width navbar: Home / Selected works / Elsewhere / Instagram / Email. Page-label headings remain accessible but visually hidden.
+
+## Content and assets
+
+- `series.json`: public project descriptions and references, preserved verbatim from the artist-provided material. Preserve original wording, punctuation and the title spelling **Alexythimia**.
+- `artwork-metadata.json`: explicit selection and credits, keyed by private source filename.
+- `works.js`: generated build-time catalogue of public derivatives and display dimensions; not a runtime script or deployed file.
+- `books.json`: book titles, purchase URLs, cover properties and the supplied English/Italian descriptions, including the full Versi Liberi biography.
+- `series-template.html` and the four page templates: static HTML inputs for `scripts/build.mjs`.
+
+The photography selection contains 24 works: six from A Face in the Crowd, three Alexythimia works in I/II/III order, and 15 from For Now We See Through a Glass, Darkly. Removed works do not return merely because an original remains locally archived.
+
+### Private originals
+
+`res/works/` and `res/publications/` are **ignored private inputs**, not repository or deployment assets. They remain on the author's machine with a separate private backup. A fresh public checkout intentionally has no originals. Previously committed source files may still exist in older Git history; this project does not rewrite that history.
+
+To regenerate derivatives locally, restore the private inputs to those directories, update the selection or book data, and run:
+
+```sh
+npm run assets
+npm run build
+```
+
+Commit only the generated, metadata-free public derivatives and catalogue. Photography previews are capped at 960px, series images at 1440px and book covers at 960px, without upscaling. EXIF orientation is applied before metadata is stripped; catalogue dimensions describe the upright image. The Light 6, immediately before Michelle, is vertical. Originals are never modified.
+
+The public portrait is a metadata-free, 960×960 WebP at `res/portraits/ivan.webp`; its source photo stays private. Images delivered to a browser can be saved or captured. Disabled native dragging is only a casual deterrent, not copy protection.
+
+## Presentation and interaction
+
+Typography uses locally installed Helvetica Neue Bold / Helvetica, with Arial and sans-serif fallbacks. Proprietary font files are not bundled or redistributed. Other devices use their own fonts; identical rendering everywhere requires a suitable webfont licence.
+
+Main text, titles, links, dates, credits and references share a responsive 28–44px size, weight 700, 1.15 leading and +0.01em tracking. Navigation, copyright and physical book-spine labels are smaller. All surfaces are black and interface text is white; original artwork and cover colours are unchanged.
+
+`main.js` implements a bounded three-cycle ribbon with wheel, drag, native touch and keyboard browsing. Resizing preserves browsing position; visual repetitions have no duplicate IDs or accessibility stops. No autoplay or artwork modal is used. Without JavaScript, the original static strip remains finite and natively scrollable.
+
+`books.js` keeps hover previews separate from selected descriptions, cancels superseded text effects and scroll requests, and respects reduced motion. Printed 3D cover planes never receive blur/fade effects. `site.js` handles the portrait and progressively enhanced native page transitions; books opt out so their printed planes stay sharp.

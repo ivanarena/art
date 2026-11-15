@@ -4,81 +4,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Books by Ivan Arena — The Second Thought, And Then We Walk Out, Crepuscolo, and Versi Liberi." />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#000000" />
     <title>Ivan Arena — Books</title>
     <link rel="icon" href="res/favicon.ico" />
-    <link rel="preload" href="res/fonts/afacad-regular-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="books.css" />
     <script src="site.js"></script>
     <script src="books.js" defer></script>
   </head>
   <body>
+    <!-- SITE-NAV -->
     <main class="books-main">
-      <header class="books-header">
-        <h1 class="intro-copy">Books</h1>
-        <nav class="contact-links" aria-label="Links">
-          <a href="index.html">Selected work</a>
-          <a href="elsewhere.html">Elsewhere</a>
-          <a href="https://www.instagram.com/ivanknowswhat/" target="_blank" rel="noopener noreferrer">Instagram</a>
-          <a href="mailto:parlementmgmt@gmail.com">Email</a>
-        </nav>
-      </header>
-
-      <section class="bookshelf" aria-label="Books by Ivan Arena">
-        <button class="book is-open" aria-expanded="true" aria-controls="book-details" aria-label="Close The Second Thought"
-          data-title="The Second Thought" data-description="Hybrid work · 2026" data-url="https://www.amazon.com/dp/B0HB2SYTR4"
-          style="--cover-ratio: .625; --spine-color: #3b4029; --spine-ink: #ede9dc">
-          <span class="book-object" aria-hidden="true">
-            <span class="book-back"></span>
-            <span class="book-pages"></span>
-            <span class="book-top"></span>
-            <span class="book-spine"><span>The Second Thought</span><span class="spine-author">Ivan Arena</span></span>
-            <span class="book-front"><img src="res/book-covers/the_second_thought.webp" alt="" width="625" height="1000" draggable="false" fetchpriority="high" /></span>
-          </span>
-        </button>
-        <button class="book" aria-expanded="false" aria-controls="book-details" aria-label="Open And Then We Walk Out"
-          data-title="And Then We Walk Out" data-description="Poems · 2025" data-url="https://www.amazon.com/dp/B0FMJV8SJL"
-          style="--cover-ratio: .626; --spine-color: #a5aaa6; --spine-ink: #28302c">
-          <span class="book-object" aria-hidden="true">
-            <span class="book-back"></span>
-            <span class="book-pages"></span>
-            <span class="book-top"></span>
-            <span class="book-spine"><span>And Then We Walk Out</span><span class="spine-author">Ivan Arena</span></span>
-            <span class="book-front"><img src="res/book-covers/and_then_we_walk_out.webp" alt="" width="313" height="500" draggable="false" /></span>
-          </span>
-        </button>
-        <button class="book" aria-expanded="false" aria-controls="book-details" aria-label="Open Crepuscolo"
-          data-title="Crepuscolo" data-description="Novel · 2024" data-url="https://www.amazon.com/dp/B0DP4HZVNV"
-          style="--cover-ratio: .626; --spine-color: #bcb69c; --spine-ink: #674d3b">
-          <span class="book-object" aria-hidden="true">
-            <span class="book-back"></span>
-            <span class="book-pages"></span>
-            <span class="book-top"></span>
-            <span class="book-spine"><span>Crepuscolo</span><span class="spine-author">Ivan Arena</span></span>
-            <span class="book-front"><img src="res/book-covers/crepuscolo.webp" alt="" width="313" height="500" draggable="false" /></span>
-          </span>
-        </button>
-        <button class="book" aria-expanded="false" aria-controls="book-details" aria-label="Open Versi Liberi"
-          data-title="Versi Liberi" data-description="Poems · 2023" data-url="https://www.amazon.com/dp/B0CRRN5X4M"
-          style="--cover-ratio: .664; --spine-color: #4e2c42; --spine-ink: #f2eae1">
-          <span class="book-object" aria-hidden="true">
-            <span class="book-back"></span>
-            <span class="book-pages"></span>
-            <span class="book-top"></span>
-            <span class="book-spine"><span>Versi Liberi</span><span class="spine-author">Ivan Arena</span></span>
-            <span class="book-front"><img src="res/book-covers/versi_liberi.webp" alt="" width="332" height="500" draggable="false" /></span>
-          </span>
-        </button>
-      </section>
-
-      <section class="book-details" id="book-details" aria-live="polite" aria-atomic="true">
-        <h2 id="book-title">The Second Thought</h2>
-        <p id="book-description">Hybrid work · 2026</p>
-        <a id="book-purchase" href="https://www.amazon.com/dp/B0HB2SYTR4" target="_blank" rel="noopener noreferrer">Get the book ↗</a>
-      </section>
-      <noscript><p class="no-script">Enable JavaScript to unfold the other books.</p></noscript>
+      <h1 class="intro-copy sr-only">Books</h1>
+      <div class="books-layout">
+        <section class="book-names title-index" aria-label="Book titles">
+          <!-- BOOK-NAMES -->
+        </section>
+        <section class="book-details" id="book-details" aria-live="polite" aria-atomic="true" aria-labelledby="book-title" hidden>
+          <h2 id="book-title" tabindex="-1"></h2>
+          <p id="book-meta"></p>
+          <div id="book-description"></div>
+          <div class="book-actions">
+            <a id="book-purchase" target="_blank" rel="noopener noreferrer">Get the book ↗</a>
+            <button id="book-close" type="button">Close</button>
+          </div>
+        </section>
+        <div class="books-scene">
+          <section class="bookshelf" aria-label="Book covers">
+            <!-- BOOK-PREVIEWS -->
+          </section>
+        </div>
+      </div>
+      <noscript><section class="book-fallback" aria-label="Book descriptions"><!-- BOOK-FALLBACK --></section></noscript>
     </main>
     <footer class="copyright">© <span id="year">2026</span> Ivan Arena. All rights reserved.</footer>
+    <script type="application/json" id="book-data"><!-- BOOK-DATA --></script>
   </body>
 </html>

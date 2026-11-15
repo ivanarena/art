@@ -1,103 +1,145 @@
 import { test, expect } from '@playwright/test';
-import sharp from 'sharp';
 
-const ink = 'rgb(28, 27, 25)';
-const mutedInk = 'rgb(106, 103, 98)';
-
-test('natural-case Afacad typography and white backgrounds are shared by every page and gallery layer', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  for (const path of ['/', '/gallery.html', '/books.html', '/elsewhere.html']) {
-    await page.goto(path);
-    await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
-    await expect(page.locator('body')).toHaveCSS('font-family', /Afacad/);
-    await expect(page.locator('body')).toHaveCSS('text-transform', 'none');
-    if (path === '/books.html') await expect(page.locator('.book-spine').first()).toHaveCSS('text-transform', 'none');
-    expect(await page.locator('body').evaluate(body => getComputedStyle(body, '::before').backgroundImage)).toBe('none');
-    await expect(page.locator('header')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-    await expect(page.locator('html')).toHaveCSS('color', ink);
-    await expect(page.locator('.intro-copy')).toHaveCSS('color', ink);
-    await expect(page.locator('.copyright')).toHaveCSS('color', mutedInk);
-    await expect(page.locator('.contact-links a').first()).toHaveCSS('color', ink);
-    if (path === '/books.html') await expect(page.locator('.book-details p')).toHaveCSS('color', mutedInk);
-    if (path === '/elsewhere.html') await expect(page.locator('.writing-outlet').first()).toHaveCSS('color', mutedInk);
-  }
+test('every page uses black surfaces, white text and locally available Helvetica without redistributing fonts', async ({ page, request }) => {
+  const fontRequests = [];
+  page.on('request', request => { if (request.resourceType() === 'font') fontRequests.push(request.url()); });
   await page.goto('/');
-  await page.locator('#pile').click();
-  await expect(page.locator('#gallery')).toHaveCSS('background-image', 'none');
-  expect(await page.locator('#gallery').evaluate(dialog => getComputedStyle(dialog, '::backdrop').backgroundImage)).toBe('none');
-  await expect(page.locator('#close-gallery')).toHaveCSS('color', ink);
-  await expect(page.locator('#gallery-work-title')).toHaveCSS('color', ink);
-  await expect(page.locator('#gallery-medium')).toHaveCSS('color', mutedInk);
-  await page.locator('#inspect').click();
-  await expect(page.locator('#viewer')).toHaveCSS('background-image', 'none');
-  expect(await page.locator('#viewer').evaluate(dialog => getComputedStyle(dialog, '::backdrop').backgroundImage)).toBe('none');
-  for (const selector of ['#gallery', '#viewer']) {
-    await expect(page.locator(`${selector} .chrome`).first()).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-    expect(await page.locator(`${selector} .gallery-edge`).first().evaluate(edge => getComputedStyle(edge, '::after').backgroundImage)).toBe('none');
-  }
-  await expect(page.locator('#work-title')).toHaveCSS('color', ink);
-  await expect(page.locator('#detail-medium')).toHaveCSS('color', mutedInk);
-});
-
-test('progressive edge blur follows the gallery axis without covering focused art or intercepting input', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
-  await page.locator('#pile').click();
-  for (const dialog of ['#gallery', '#viewer']) {
-    if (dialog === '#viewer') await page.locator('#inspect').click();
-    const edges = page.locator(`${dialog} > .gallery-edge`);
-    await expect(edges).toHaveCount(2);
-    const vertical = await page.locator('#rail').getAttribute('data-axis') === 'vertical';
-    for (const edge of await edges.all()) {
-      await expect(edge).toHaveAttribute('aria-hidden', 'true');
-      await expect(edge).toHaveCSS('pointer-events', 'none');
-      const filters = await edge.locator('span').evaluateAll(elements => elements.map(element => ({
-        blur: getComputedStyle(element).backdropFilter,
-        mask: getComputedStyle(element).maskImage,
-      })));
-      expect(filters.map(filter => filter.blur)).toEqual(['blur(2px)', 'blur(6px)', 'blur(14px)']);
-      expect(filters.every(filter => filter.mask.includes('linear-gradient'))).toBe(true);
-      expect(await edge.evaluate(element => {
-        const box = element.getBoundingClientRect();
-        return element.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2));
-      })).toBe(false);
-    }
-    const first = await edges.first().boundingBox();
-    const last = await edges.last().boundingBox();
-    const focused = await page.locator(dialog === '#viewer' ? '#inspection' : '.gallery-card[data-slot="0"]').boundingBox();
-    if (vertical) {
-      expect(first.y + first.height).toBeLessThanOrEqual(focused.y);
-      expect(last.y).toBeGreaterThanOrEqual(focused.y + focused.height);
-    } else {
-      expect(first.x + first.width).toBeLessThanOrEqual(focused.x);
-      expect(last.x).toBeGreaterThanOrEqual(focused.x + focused.width);
-    }
-    await expect(page.locator(`${dialog} .chrome`).first()).toHaveCSS('z-index', '5');
-    await expect(page.locator(dialog === '#viewer' ? '#detail-image' : '.gallery-card[data-slot="0"] img')).toHaveCSS('filter', 'none');
-  }
-  await page.emulateMedia({ forcedColors: 'active' });
-  await expect(page.locator('#viewer > .gallery-edge').first()).toBeHidden();
-});
-
-test('edge blur changes rendered pixels but leaves the central photograph unchanged', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
-  await page.locator('#pile').click();
+  await expect(page.locator('.home-background')).toHaveCount(0);
+  await expect(page.locator('body')).toHaveCSS('color', 'rgb(255, 255, 255)');
+  expect(await page.locator('body').evaluate(body => getComputedStyle(body, '::before').content)).toBe('none');
   await page.evaluate(() => document.fonts.ready);
-  await page.waitForFunction(() => {
-    const rail = document.getElementById('rail').getBoundingClientRect();
-    return [...document.querySelectorAll('.gallery-card img')].filter(image => {
-      const box = image.getBoundingClientRect();
-      return box.bottom > rail.top && box.top < rail.bottom && box.right > rail.left && box.left < rail.right;
-    }).every(image => image.complete && image.naturalWidth);
+  const sources = await page.evaluate(() => [...document.styleSheets].flatMap(sheet => [...sheet.cssRules]).filter(rule => rule.type === CSSRule.FONT_FACE_RULE).map(rule => rule.style.getPropertyValue('src')));
+  expect(sources).toHaveLength(1);
+  expect(sources[0]).toContain('local(');
+  expect(sources[0]).not.toContain('url(');
+  for (const path of ['/', '/gallery.html', '/a-face-in-the-crowd.html', '/books.html', '/elsewhere.html']) {
+    await page.goto(path);
+    await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(0, 0, 0)');
+    await expect(page.locator('html')).toHaveCSS('color-scheme', 'dark');
+    await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#000000');
+    await expect(page.locator('body')).toHaveCSS('color', 'rgb(255, 255, 255)');
+    await expect(page.locator('body')).toHaveCSS('font-family', /Helvetica Neue/);
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(0, 0, 0)');
+    await expect(page.locator('.site-nav')).toHaveCSS('background-color', 'rgb(0, 0, 0)');
+    await expect(page.locator('.site-nav')).toHaveCSS('background-image', 'none');
+    await expect(page.locator('h1')).toHaveCSS('font-weight', '700');
+    await expect(page.locator('.copyright')).toHaveCSS('color', 'rgb(255, 255, 255)');
+  }
+  expect(fontRequests).toEqual([]);
+  for (const path of ['/res/fonts/HelveticaNeue-Bold.ttf', '/res/fonts/InterVariable.woff2']) expect((await request.get(path)).status()).toBe(404);
+});
+
+test('series names reveal only their own preview on hover and keyboard focus', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Desktop hover preview');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/gallery.html');
+  const entries = page.locator('.series-entry');
+  await entries.nth(0).locator('.series-name').hover();
+  await expect(entries.nth(0).locator('.series-preview')).toBeVisible();
+  await expect(entries.nth(1).locator('.series-preview')).toBeHidden();
+  await page.mouse.move(5, 5);
+  await expect(entries.nth(0).locator('.series-preview')).toBeHidden();
+  await entries.nth(0).locator('.series-name').focus();
+  await page.keyboard.press('Tab');
+  await expect(entries.nth(1).locator('.series-name')).toBeFocused();
+  await expect(entries.nth(1).locator('.series-preview')).toBeVisible();
+  await expect(entries.nth(1).locator('img')).toHaveCount(3);
+  await expect(entries.nth(0).locator('.series-preview')).toBeHidden();
+  await expect(entries.nth(1).locator('.series-preview')).toHaveCSS('transition-duration', '0s');
+});
+
+for (const reducedMotion of ['reduce', 'no-preference']) {
+  test(`Back navigation and restored focus never stack previews (${reducedMotion})`, async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Desktop previews');
+    await page.emulateMedia({ reducedMotion });
+    await page.goto('/gallery.html');
+    const names = page.locator('.series-name');
+    const previews = page.locator('.series-preview');
+    for (let index = 0; index < 3; index++) {
+      await names.nth(index).click();
+      await page.goBack();
+      await expect(page).toHaveURL(/\/gallery\.html$/);
+      // Exercise the focus state restored by browsers even when the test
+      // context reloads the document rather than restoring it from BFCache.
+      await names.nth(index).focus();
+      const hovered = (index + 1) % 3;
+      await names.nth(hovered).hover();
+      expect(await page.locator('.series-preview:visible').count()).toBe(1);
+      await expect(previews.nth(hovered)).toBeVisible();
+      await expect(previews.nth(index)).toBeHidden();
+      await expect(names.nth(index)).toBeFocused();
+      await page.goForward();
+      await page.goBack();
+      await names.nth(hovered).hover();
+      expect(await page.locator('.series-preview:visible').count()).toBe(1);
+    }
+    await page.mouse.move(5, 5);
+    await names.first().focus();
+    await page.keyboard.press('Tab');
+    await expect(names.nth(1)).toBeFocused();
+    await expect(previews.nth(1)).toBeVisible();
+    await names.nth(2).hover();
+    expect(await page.locator('.series-preview:visible').count()).toBe(1);
+    await expect(previews.nth(2)).toBeVisible();
+    await expect(names.nth(1)).toBeFocused();
+    await page.mouse.move(5, 5);
+    await expect(previews.nth(1)).toBeVisible();
+    await expect(previews.nth(2)).toBeHidden();
   });
-  const box = await page.locator('.gallery-card[data-slot="0"]').boundingBox();
-  const crop = { left: Math.round(box.x + box.width / 2 - 24), top: Math.round(box.y + box.height / 2 - 24), width: 48, height: 48 };
-  const frosted = await page.screenshot({ path: `test-results/blurred-gallery-${test.info().project.name}.png`, scale: 'css' });
-  await page.addStyleTag({ content: '.gallery-edge { visibility: hidden !important; }' });
-  const plain = await page.screenshot({ scale: 'css' });
-  const frostedCentre = await sharp(frosted).extract(crop).raw().toBuffer();
-  const plainCentre = await sharp(plain).extract(crop).raw().toBuffer();
-  expect(frostedCentre.equals(plainCentre)).toBe(true);
-  expect(frosted.equals(plain)).toBe(false);
+}
+
+test('paragraphs, titles, links, metadata and references share one type size across every page', async ({ page }) => {
+  const type = locator => locator.evaluate(element => {
+    const css = getComputedStyle(element);
+    return { family: css.fontFamily, size: css.fontSize, weight: css.fontWeight, color: css.color, leading: css.lineHeight, tracking: css.letterSpacing };
+  });
+  const seriesCopy = '.series-title, .series-description, .series-credit, .series-references, .series-references h2';
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/gallery.html');
+    const reference = await type(page.locator('.series-name').first());
+    for (const [url, selector] of [
+      ['/', '.intro-copy'], ['/gallery.html', '.series-name, .books-link'],
+      ['/a-face-in-the-crowd.html', seriesCopy], ['/alexythimia.html', seriesCopy], ['/for-now-we-see-through-a-glass-darkly.html', seriesCopy],
+      ['/books.html', '.book-name, #book-title, #book-meta, #book-description, #book-purchase'], ['/elsewhere.html', '.writing-entry h2, .writing-outlet, .writing-entry time'],
+    ]) {
+      await page.goto(url);
+      for (const target of await page.locator(selector).all()) expect(await type(target)).toEqual(reference);
+    }
+  }
+});
+
+test('hover previews show every work in a single tightly packed row, clipped with frosted edges', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Desktop hover');
+  await page.goto('/gallery.html');
+  const entry = page.locator('.series-entry').first();
+  await entry.locator('.series-name').hover();
+  const preview = entry.locator('.series-preview');
+  await expect(preview).toBeVisible();
+  await expect(preview).toHaveCSS('overflow-x', 'hidden');
+  await expect(entry.locator('.preview-track')).toHaveCSS('column-gap', '6px');
+  const rectangles = await preview.locator('img').evaluateAll(images => images.map(image => image.getBoundingClientRect().toJSON()));
+  expect(Math.max(...rectangles.map(box => box.y)) - Math.min(...rectangles.map(box => box.y))).toBeLessThan(1);
+  expect(Math.max(...rectangles.map(box => box.height)) - Math.min(...rectangles.map(box => box.height))).toBeLessThan(1);
+  expect(await preview.evaluate(element => element.scrollWidth > element.clientWidth)).toBe(true);
+  const edge = await preview.evaluate(element => ({ filter: getComputedStyle(element, '::after').backdropFilter, mask: getComputedStyle(element, '::after').maskImage }));
+  expect(edge.filter).toBe('blur(8px)');
+  expect(edge.mask).toContain('linear-gradient');
+});
+
+test('artwork has no links, focus controls or modal; only the ribbon is keyboard-focusable', async ({ page }) => {
+  await page.goto('/a-face-in-the-crowd.html');
+  const track = page.locator('#series-track');
+  const image = page.locator('.series-work[data-original] img').first();
+  await expect(page.locator('dialog, [data-focus], #series-track a, #series-track button, .carousel-controls, .series-pagination')).toHaveCount(0);
+  await expect(track).toHaveAttribute('tabindex', '0');
+  await expect(image).toHaveAttribute('draggable', 'false');
+  await expect(image).toHaveCSS('object-fit', 'contain');
+  const url = page.url();
+  await image.click();
+  expect(page.url()).toBe(url);
+  await expect(page.locator('dialog')).toHaveCount(0);
+  await expect(image).not.toBeFocused();
+  await track.focus();
+  await expect(track).toBeFocused();
 });

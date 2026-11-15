@@ -3,65 +3,43 @@
 import sharp from 'sharp';
 import { readdir, readFile, mkdir, rm, writeFile } from 'node:fs/promises';
 
-async function filesIn(directory) {
-  try { return await readdir(directory); }
-  catch (error) { if (error.code === 'ENOENT') return []; throw error; }
-}
-
-// Artist-supplied metadata is keyed by source filename, not a shifting gallery index.
+// This is both the selection allowlist and artist-supplied credits, keyed by
+// source filename. Unselected originals can stay archived without reappearing.
+// Sharp reads the selected JPEG, PNG and WebP sources without changing them.
 const metadata = JSON.parse(await readFile('artwork-metadata.json', 'utf8'));
-const series = [
-  ['self-portraits', 'Self-portraits'],
-  ['alexithymia', 'Alexithymia'],
-  ['urbs', 'Urbs'],
-  ['birth', 'Birth'],
-  ['brut', 'Brut'],
-  ['tulagiog', 'There used to live a gnome in our garden'],
-  ['000000', '000000'],
-  ['various', 'Various'],
+const groups = new Map();
+for (const [file, credit] of Object.entries(metadata)) {
+  if (!credit.title || !credit.series) throw new Error(`Missing title or series for ${file}`);
+  const work = {
+    src: `res/works/${file}`,
+    title: credit.title,
+    series: credit.series,
+    medium: credit.medium || 'Digital image',
+    year: credit.year == null || credit.year === '' ? null : String(credit.year),
+  };
+  if (!groups.has(work.series)) groups.set(work.series, []);
+  groups.get(work.series).push(work);
+}
+// Keep each series together, opening with A Face in the Crowd. Preserve the
+// selected source order within each series and the remaining series order.
+const openingSeries = 'A Face in the Crowd';
+const works = [
+  ...(groups.get(openingSeries) || []),
+  ...[...groups].filter(([series]) => series !== openingSeries).flatMap(([, group]) => group),
 ];
-const groups = await Promise.all(series.map(async ([folder, title]) => {
-  const directory = `res/works/${folder}`;
-  const files = (await filesIn(directory)).filter(f => f.endsWith('.webp')).sort();
-  return files.map((file, i) => {
-    const credit = metadata[`${folder}/${file}`] || {};
-    const year = credit.year == null || credit.year === '' ? null : String(credit.year);
-    return {
-      src: `${directory}/${file}`,
-      title: credit.title || `${title}, ${String(i + 1).padStart(2, '0')}`,
-      series: title,
-      medium: credit.medium || 'Digital image',
-      year,
-    };
-  });
-}));
-// Temporarily show photographs only; keep the original covers for later.
-const INCLUDE_PUBLICATIONS = false;
-if (INCLUDE_PUBLICATIONS) {
-  const publications = new Set(await filesIn('res/publications'));
-  groups.push([
-    { src: 'res/publications/and_then_we_walk_out.jpg', title: 'And Then We Walk Out, 2025', series: 'Literature' },
-    { src: 'res/publications/crepuscolo.jpg', title: 'Crepuscolo, 2024', series: 'Literature' },
-    { src: 'res/publications/versi_liberi.jpg', title: 'Versi Liberi, 2023', series: 'Literature' },
-  ].filter(work => publications.has(work.src.split('/').at(-1))));
-}
-const works = [];
-for (let i = 0; i < Math.max(...groups.map(g => g.length)); i++) {
-  for (const group of groups) if (group[i]) works.push(group[i]);
-}
-if (!works.length) throw new Error('No artwork remains. Add at least one source image before rebuilding.');
+if (!works.length) throw new Error('No artwork selected. Add a source and its metadata before rebuilding.');
 await mkdir('res/previews', { recursive: true });
 // Limit decoding concurrency: some of the originals are 81 megapixels.
 for (const [i, work] of works.entries()) {
-  const { width, height } = await sharp(work.src).metadata();
+  const { autoOrient: { width, height } } = await sharp(work.src).metadata();
   work.width = width;
   work.height = height;
   work.preview = `res/previews/${String(i + 1).padStart(2, '0')}-small.webp`;
   work.detail = `res/previews/${String(i + 1).padStart(2, '0')}-large.webp`;
   // Public derivatives only: cap the longest edge, preserve aspect ratio,
-  // strip source metadata, and never upscale the smaller book covers.
-  await sharp(work.src).resize({ width: 960, height: 960, fit: 'inside', withoutEnlargement: true }).webp({ quality: 80 }).toFile(work.preview);
-  await sharp(work.src).resize({ width: 1440, height: 1440, fit: 'inside', withoutEnlargement: true }).webp({ quality: 82 }).toFile(work.detail);
+  // honor EXIF orientation before stripping metadata, and never upscale.
+  await sharp(work.src).autoOrient().resize({ width: 960, height: 960, fit: 'inside', withoutEnlargement: true }).webp({ quality: 80 }).toFile(work.preview);
+  await sharp(work.src).autoOrient().resize({ width: 1440, height: 1440, fit: 'inside', withoutEnlargement: true }).webp({ quality: 82 }).toFile(work.detail);
 }
 // Remove derivatives of deleted work instead of leaving them publicly accessible.
 const expected = new Set(works.flatMap(work => [work.preview, work.detail]));
