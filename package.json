@@ -1,0 +1,18 @@
+{
+  "name": "ivan-arena-art",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "python3 -m http.server 4173 --bind 127.0.0.1 --directory dist",
+    "preview": "npm run build && npm run serve",
+    "pretest": "npm run build",
+    "test": "playwright test",
+    "assets": "node scripts/prepare-assets.mjs && node scripts/prepare-books.mjs",
+    "books:assets": "node scripts/prepare-books.mjs",
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "sharp": "^0.35.5"
+  }
+}

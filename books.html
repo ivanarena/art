@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Books by Ivan Arena — The Second Thought, And Then We Walk Out, Crepuscolo, and Versi Liberi." />
+    <meta name="theme-color" content="#000000" />
+    <title>Ivan Arena — Books</title>
+    <link rel="icon" href="res/favicon.ico" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="books.css" />
+    <script src="site.js"></script>
+    <script src="books.js" defer></script>
+  </head>
+  <body>
+    <!-- SITE-NAV -->
+    <main class="books-main">
+      <h1 class="intro-copy sr-only">Books</h1>
+      <div class="books-layout">
+        <section class="book-names title-index" aria-label="Book titles">
+          <!-- BOOK-NAMES -->
+        </section>
+        <section class="book-details" id="book-details" aria-live="polite" aria-atomic="true" aria-labelledby="book-title" hidden>
+          <h2 id="book-title" tabindex="-1"></h2>
+          <p id="book-meta"></p>
+          <div id="book-description"></div>
+          <div class="book-actions">
+            <a id="book-purchase" target="_blank" rel="noopener noreferrer">Get the book ↗</a>
+            <button id="book-close" type="button">Close</button>
+          </div>
+        </section>
+        <div class="books-scene">
+          <section class="bookshelf" aria-label="Book covers">
+            <!-- BOOK-PREVIEWS -->
+          </section>
+        </div>
+      </div>
+      <noscript><section class="book-fallback" aria-label="Book descriptions"><!-- BOOK-FALLBACK --></section></noscript>
+    </main>
+    <footer class="copyright">© <span id="year">2026</span> Ivan Arena. All rights reserved.</footer>
+    <script type="application/json" id="book-data"><!-- BOOK-DATA --></script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+
+# Private source originals are never committed or deployed.
+# Public, metadata-free derivatives remain tracked under res/previews/,
+# res/book-covers/ and res/portraits/.
+res/works/
+res/publications/
+res/fonts/
