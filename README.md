@@ -27,7 +27,7 @@ Tests use Chromium. Set `CHROMIUM_PATH` to use an existing installation. All pub
 
 The GitHub Actions workflow in `.github/workflows/deploy.yml` tests pull requests and deploys successful builds of `main` to **https://ivanarena.github.io/art/**. GitHub Pages must use **GitHub Actions**, not branch-root publishing.
 
-The build copies only explicitly referenced public files, rather than entire asset directories. Originals, application archives, development metadata, fonts, scripts, templates, Git files and stray files beside previews cannot enter the deployment artifact. Public URLs are content-versioned so changed images and styles do not reuse stale caches. `.nojekyll` marks the output as plain static files.
+The build copies only explicitly referenced public files, rather than entire asset directories. Originals, application archives, development metadata, unapproved fonts, scripts, templates, Git files and stray files beside previews cannot enter the deployment artifact. The licensed Helvetica Neue Bold webfont is explicitly allowlisted. Public URLs are content-versioned so changed images and styles do not reuse stale caches. `.nojekyll` marks the output as plain static files.
 
 ## Pages
 
@@ -66,7 +66,7 @@ The public portrait is a metadata-free, 960×960 WebP at `res/portraits/ivan.web
 
 ## Presentation and interaction
 
-Typography uses locally installed Helvetica Neue Bold / Helvetica, with Arial and sans-serif fallbacks. Proprietary font files are not bundled or redistributed. Other devices use their own fonts; identical rendering everywhere requires a suitable webfont licence.
+Typography uses a self-hosted Helvetica Neue Bold WOFF2, included under the site owner's confirmed licence. Every page preloads the same content-versioned font; CSS deliberately uses the webfont rather than a potentially different locally installed Helvetica. The original embedded copyright metadata is preserved. Helvetica/Arial/sans-serif remain fallbacks if the webfont cannot load. See `res/fonts/README.md`; the font is proprietary, not open source.
 
 Main text, titles, links, dates, credits and references share a responsive 28–44px size, weight 700, 1.15 leading and +0.01em tracking. Navigation, copyright and physical book-spine labels are smaller. All surfaces are black and interface text is white; original artwork and cover colours are unchanged.
 

@@ -18,9 +18,10 @@ for (const file of [...pages, 'main.css', 'main.js', 'books.css', 'books.js', 'e
 }
 // Copy referenced public derivatives, never entire directories: stray originals,
 // notes or stale images must not become public just by sitting beside a preview.
-const publicAssets = new Set(['res/portraits/ivan.webp', ...works.flatMap(work => [work.preview, work.detail]), ...books.map(book => book.cover)]);
+const font = 'res/fonts/HelveticaNeue-Bold.woff2';
+const publicAssets = new Set([font, 'res/portraits/ivan.webp', ...works.flatMap(work => [work.preview, work.detail]), ...books.map(book => book.cover)]);
 for (const asset of publicAssets) {
-  if (!/^res\/(?:previews|portraits|book-covers)\/[a-z0-9_-]+\.webp$/i.test(asset)) throw new Error(`Invalid public asset: ${asset}`);
+  if (asset !== font && !/^res\/(?:previews|portraits|book-covers)\/[a-z0-9_-]+\.webp$/i.test(asset)) throw new Error(`Invalid public asset: ${asset}`);
   await mkdir(path.dirname(path.join(output, asset)), { recursive: true });
   await cp(path.join(root, asset), path.join(output, asset));
 }
@@ -32,6 +33,8 @@ async function versioned(asset) {
   }
   return `${asset}?v=${versions.get(asset)}`;
 }
+const stylesheet = await readFile(path.join(output, 'main.css'), 'utf8');
+await writeFile(path.join(output, 'main.css'), stylesheet.replace(font, await versioned(font)));
 for (const work of works) {
   work.preview = await versioned(work.preview);
   work.detail = await versioned(work.detail);
@@ -101,7 +104,7 @@ const navigation = file => `<nav class="site-nav" aria-label="Primary">
 for (const file of pages) {
   let html = await readFile(path.join(output, file), 'utf8');
   html = html.replace('<!-- SITE-NAV -->', navigation(file));
-  const assets = [...html.matchAll(/(?:src|href)="([^"?]+\.(?:js|css|webp|ico))"/g)].map(match => match[1]);
+  const assets = [...html.matchAll(/(?:src|href)="([^"?]+\.(?:js|css|webp|ico|woff2))"/g)].map(match => match[1]);
   for (const asset of new Set(assets)) html = html.replaceAll(`"${asset}"`, `"${await versioned(asset)}"`);
   await writeFile(path.join(output, file), html);
 }

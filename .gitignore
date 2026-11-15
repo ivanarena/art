@@ -8,4 +8,6 @@ playwright-report/
 # res/book-covers/ and res/portraits/.
 res/works/
 res/publications/
-res/fonts/
+res/fonts/*
+!res/fonts/HelveticaNeue-Bold.woff2
+!res/fonts/README.md

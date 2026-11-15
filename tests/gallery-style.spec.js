@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('every page uses black surfaces, white text and locally available Helvetica without redistributing fonts', async ({ page, request }) => {
+test('every page uses black surfaces, white text and the licensed self-hosted Helvetica font', async ({ page, request }) => {
   const fontRequests = [];
   page.on('request', request => { if (request.resourceType() === 'font') fontRequests.push(request.url()); });
   await page.goto('/');
@@ -10,8 +10,17 @@ test('every page uses black surfaces, white text and locally available Helvetica
   await page.evaluate(() => document.fonts.ready);
   const sources = await page.evaluate(() => [...document.styleSheets].flatMap(sheet => [...sheet.cssRules]).filter(rule => rule.type === CSSRule.FONT_FACE_RULE).map(rule => rule.style.getPropertyValue('src')));
   expect(sources).toHaveLength(1);
-  expect(sources[0]).toContain('local(');
-  expect(sources[0]).not.toContain('url(');
+  expect(sources[0]).not.toContain('local(');
+  expect(sources[0]).toMatch(/HelveticaNeue-Bold\.woff2\?v=[a-f0-9]{12}/);
+  await expect(page.locator('link[rel="preload"][as="font"]')).toHaveAttribute('href', /HelveticaNeue-Bold\.woff2\?v=[a-f0-9]{12}/);
+  const client = await page.context().newCDPSession(page);
+  await client.send('DOM.enable');
+  await client.send('CSS.enable');
+  const { root } = await client.send('DOM.getDocument');
+  const { nodeId } = await client.send('DOM.querySelector', { nodeId: root.nodeId, selector: '.intro-copy' });
+  const { fonts } = await client.send('CSS.getPlatformFontsForNode', { nodeId });
+  expect(fonts.some(font => font.isCustomFont && font.postScriptName === 'HelveticaNeue-Bold')).toBe(true);
+  await client.detach();
   for (const path of ['/', '/gallery.html', '/a-face-in-the-crowd.html', '/books.html', '/elsewhere.html']) {
     await page.goto(path);
     await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(0, 0, 0)');
@@ -25,7 +34,13 @@ test('every page uses black surfaces, white text and locally available Helvetica
     await expect(page.locator('h1')).toHaveCSS('font-weight', '700');
     await expect(page.locator('.copyright')).toHaveCSS('color', 'rgb(255, 255, 255)');
   }
-  expect(fontRequests).toEqual([]);
+  expect(fontRequests.length).toBeGreaterThan(0);
+  expect(new Set(fontRequests).size).toBe(1);
+  for (const url of fontRequests) {
+    expect(new URL(url).origin).toBe(new URL(page.url()).origin);
+    expect(new URL(url).pathname).toBe('/res/fonts/HelveticaNeue-Bold.woff2');
+  }
+  expect((await request.get('/res/fonts/HelveticaNeue-Bold.woff2')).status()).toBe(200);
   for (const path of ['/res/fonts/HelveticaNeue-Bold.ttf', '/res/fonts/InterVariable.woff2']) expect((await request.get(path)).status()).toBe(404);
 });
 

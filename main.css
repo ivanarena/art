@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Helvetica Neue";
-  src: local("HelveticaNeue-Bold"), local("Helvetica Neue Bold");
+  src: url("res/fonts/HelveticaNeue-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;

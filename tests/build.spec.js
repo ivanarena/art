@@ -8,7 +8,7 @@ import { catalogue, series } from './catalogue.js';
 
 const root = process.cwd();
 const books = JSON.parse(await readFile('books.json', 'utf8'));
-const staticFiles = ['index.html', 'gallery.html', 'books.html', 'elsewhere.html', 'main.css', 'main.js', 'books.css', 'books.js', 'elsewhere.css', 'site.js', 'res/favicon.ico'];
+const staticFiles = ['index.html', 'gallery.html', 'books.html', 'elsewhere.html', 'main.css', 'main.js', 'books.css', 'books.js', 'elsewhere.css', 'site.js', 'res/favicon.ico', 'res/fonts/HelveticaNeue-Bold.woff2'];
 const images = ['res/portraits/ivan.webp', ...catalogue.flatMap(work => [work.preview, work.detail]), ...books.map(book => book.cover)];
 const expected = ['.nojekyll', ...staticFiles, ...images, ...series.map(item => `${item.slug}.html`)].sort();
 
@@ -34,6 +34,7 @@ test('stray files and private data beside public derivatives cannot enter a buil
     }
     await writeFile(path.join(fixture, 'res/previews/stale-large.webp'), 'PRIVATE_TEST_NOTE');
     await writeFile(path.join(fixture, 'res/portraits/private-original.jpg'), 'PRIVATE_TEST_NOTE');
+    await writeFile(path.join(fixture, 'res/fonts/unlicensed.ttf'), 'PRIVATE_TEST_NOTE');
     await writeFile(path.join(fixture, 'books.json'), JSON.stringify(books.map(book => ({ ...book, privateNote: 'PRIVATE_TEST_NOTE' }))));
     await promisify(execFile)(process.execPath, [path.join(fixture, 'scripts/build.mjs')], { cwd: fixture });
     const output = path.join(fixture, 'dist');
